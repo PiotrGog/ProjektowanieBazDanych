@@ -3,7 +3,6 @@ use project_db;
 DROP TABLE characters;
 DROP TABLE zones;
 DROP TABLE treasures;
-DROP TABLE outfits;
 DROP TABLE teams;
 DROP TABLE equipments;
 DROP TABLE fields;
@@ -44,12 +43,6 @@ DROP TABLE modifiers;
  CREATE TABLE IF NOT EXISTS treasures(
  	IdTreasure INT NOT NULL AUTO_INCREMENT UNIQUE,
     PRIMARY KEY(IdTreasure)
- );
-
-
- CREATE TABLE IF NOT EXISTS outfits(
- 	IdOutfit INT NOT NULL AUTO_INCREMENT UNIQUE,
-    PRIMARY KEY(IdOutfit)
  );
 
  CREATE TABLE IF NOT EXISTS teams(
@@ -165,45 +158,11 @@ CREATE TABLE IF NOT EXISTS Treasure_Equipment(
     PRIMARY KEY(IdTreasureEquipm)
 );
 
-CREATE TABLE IF NOT EXISTS Outfit_Equipment(
-	IdOutfit INT,
-    IdEquipm INT,
-    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit),
-    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
-    -- PRIMARY KEY(IdTreasureEquipm)
-);
-
-CREATE TABLE IF NOT EXISTS Outfit_Zone(
-	IdOutfit INT,
-    IdZone INT,
-    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit),
-    FOREIGN KEY (IdZone) REFERENCES zones(IdZone)
-    -- PRIMARY KEY(IdTreasureEquipm) 
-);
-
 CREATE TABLE IF NOT EXISTS Equipment_Zone(
 	IdEquipm INT,
     IdZone INT,
     FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
     FOREIGN KEY (IdZone) REFERENCES zones(IdZone)
-    -- PRIMARY KEY(IdTreasureEquipm) 
-);
-
-CREATE TABLE IF NOT EXISTS Character_Outfit(
-	IdCharacter INT,
-    IdOutfit INT,
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
-    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit)
-    -- PRIMARY KEY(IdTreasureEquipm) 
-);
-
-CREATE TABLE IF NOT EXISTS Character_Outfit(
-	IdCharacterZone INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdCharacter INT,
-    IdZone INT,
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
-    FOREIGN KEY (IdZone) REFERENCES zones(IdZone),
-    PRIMARY KEY(IdCharacterZone)
     -- PRIMARY KEY(IdTreasureEquipm) 
 );
     
@@ -263,5 +222,131 @@ CREATE TABLE IF NOT EXISTS Race_Class(
     FOREIGN KEY (IdRace) REFERENCES races(IdRace),
     FOREIGN KEY (IdClass) REFERENCES classes(IdClass),
     PRIMARY KEY(IdRace)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Character_Specialization(
+	IdCharSpec INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdCharacter INT,
+    IdSpec INT,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec),
+    PRIMARY KEY(IdCharSpec)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Specialization_Trump(
+	IdSpecTrump INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdTrump INT,
+    IdSpec INT,
+    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump),
+    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec),
+    PRIMARY KEY(IdSpecTrump)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Specialization_Skill(
+	IdSpec INT,
+    IdSkill INT,
+    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill),
+    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec),
+    PRIMARY KEY(IdSpec)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Roll_Skill(
+	IdRoll INT,
+    IdSkill INT,
+    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill),
+    FOREIGN KEY (IdRoll) REFERENCES rolls(IdRoll),
+    PRIMARY KEY(IdRoll)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Action_Skill(
+	IdAction INT,
+    IdSkill INT,
+    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill),
+    FOREIGN KEY (IdAction) REFERENCES actions(IdAction),
+    PRIMARY KEY(IdAction)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Round_Action(
+	IdRoundAction INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdRound INT,
+    IdAction INT,
+    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill),
+    FOREIGN KEY (IdAction) REFERENCES actions(IdAction),
+    PRIMARY KEY(IdRoundAction)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Character_Quest(
+	IdQuest INT,
+    IdCharacter INT,
+    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest),
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+    PRIMARY KEY(IdQuest)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Character_Action(
+	IdCharacterAction INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdCharacter INT,
+    IdAction INT,
+    FOREIGN KEY (IdAction) REFERENCES actions(IdAction),
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+    PRIMARY KEY(IdCharacterAction)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Treasure_Quest(
+	IdQuest INT,
+    IdTreasure INT,
+    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest),
+    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure),
+    PRIMARY KEY(IdQuest)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Character_Zone(
+	IdCharacterZone INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdCharacter INT,
+    IdZone INT,
+    IdEquipm INT,
+    FOREIGN KEY (IdZone) REFERENCES zones(IdZone),
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    PRIMARY KEY(IdCharacterZone)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Character_Equipment(
+	IdCharacter INT,
+    IdEquipm INT,
+    Amount INT NOT NULL,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    PRIMARY KEY(IdEquipm)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Treasure_Field(
+	IdField INT,
+    IdTreasure INT,
+    FOREIGN KEY (IdField) REFERENCES fields(IdField),
+    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure),
+    PRIMARY KEY(IdField)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Quest_Action(
+	IdQuestAction INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdQuest INT,
+    IdAction INT,
+    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest),
+    FOREIGN KEY (IdAction) REFERENCES actions(IdAction),
+    PRIMARY KEY(IdQuestAction)
     -- PRIMARY KEY(IdTreasureEquipm) 
 );
