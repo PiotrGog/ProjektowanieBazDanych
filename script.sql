@@ -155,3 +155,74 @@ DROP TABLE modifiers;
     PRIMARY KEY(IdMod)
  ); 
 
+CREATE TABLE IF NOT EXISTS Treasure_Equipment(
+	IdTreasureEquipm INT NOT NULL AUTO_INCREMENT,
+    Amount INT NOT NULL,
+    IdTreasure INT,
+    IdEquipm INT,
+    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure),
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    PRIMARY KEY(IdTreasureEquipm)
+);
+
+CREATE TABLE IF NOT EXISTS Outfit_Equipment(
+	IdOutfit INT,
+    IdEquipm INT,
+    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit),
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
+    -- PRIMARY KEY(IdTreasureEquipm)
+);
+
+CREATE TABLE IF NOT EXISTS Outfit_Zone(
+	IdOutfit INT,
+    IdZone INT,
+    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit),
+    FOREIGN KEY (IdZone) REFERENCES zones(IdZone)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Equipment_Zone(
+	IdEquipm INT,
+    IdZone INT,
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    FOREIGN KEY (IdZone) REFERENCES zones(IdZone)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Character_Outfit(
+	IdCharacter INT,
+    IdOutfit INT,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Character_Outfit(
+	IdCharacterZone INT NOT NULL AUTO_INCREMENT UNIQUE,
+	IdCharacter INT,
+    IdZone INT,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+    FOREIGN KEY (IdZone) REFERENCES zones(IdZone),
+    PRIMARY KEY(IdCharacterZone)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+    
+CREATE TABLE IF NOT EXISTS Trump_Equipment(
+	IdTrumpEquipment INT NOT NULL AUTO_INCREMENT UNIQUE,
+	IdTrump INT,
+    IdEquipm INT,
+    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump),
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    PRIMARY KEY(IdTrumpEquipment)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Equipment_Modifier(
+	IdEquipmMod INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdMod INT,
+    IdEquipm INT,
+    FOREIGN KEY (IdMod) REFERENCES modifiers(IdMod),
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    PRIMARY KEY(IdEquipmMod)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
