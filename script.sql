@@ -23,26 +23,27 @@ DROP TABLE IF EXISTS Character_Action;
 DROP TABLE IF EXISTS Character_Quest;
 DROP TABLE IF EXISTS Round_Action;
 DROP TABLE IF EXISTS Action_Skill;
+DROP TABLE IF EXISTS Race_Class;
 
-
-DROP TABLE IF EXISTS characters;
 DROP TABLE IF EXISTS zones;
 DROP TABLE IF EXISTS treasures;
 DROP TABLE IF EXISTS outfits;
-DROP TABLE IF EXISTS teams;
 DROP TABLE IF EXISTS equipments;
-DROP TABLE IF EXISTS fields;
-DROP TABLE IF EXISTS quests;
 DROP TABLE IF EXISTS rounds;
 DROP TABLE IF EXISTS actions;
 DROP TABLE IF EXISTS rolls;
 DROP TABLE IF EXISTS skills;
 DROP TABLE IF EXISTS specializations;
-DROP TABLE IF EXISTS classes;
 DROP TABLE IF EXISTS trumps;
-DROP TABLE IF EXISTS races;
 DROP TABLE IF EXISTS buffs;
 DROP TABLE IF EXISTS modifiers;
+DROP TABLE IF EXISTS quests;
+DROP TABLE IF EXISTS board;
+DROP TABLE IF EXISTS characters;
+DROP TABLE IF EXISTS fields;
+DROP TABLE IF EXISTS races;
+DROP TABLE IF EXISTS classes;
+DROP TABLE IF EXISTS teams;
 
 
 
@@ -85,6 +86,15 @@ DROP TABLE IF EXISTS modifiers;
     PRIMARY KEY(IdField)
  );
 
+CREATE TABLE IF NOT EXISTS board(
+    IdNeighbourhood INT NOT NULL AUTO_INCREMENT UNIQUE,
+    Field_1 INT NOT NULL,
+    Field_2 INT NOT NULL,
+    FOREIGN KEY(Field_1) REFERENCES fields(IdField),
+    FOREIGN KEY(Field_2) REFERENCES fields(IdField),
+    CHECK(Field_1 <> Field_2),
+    PRIMARY KEY(IdNeighbourhood)
+);
 
  CREATE TABLE IF NOT EXISTS rounds(
  	IdRound INT NOT NULL AUTO_INCREMENT UNIQUE,
@@ -162,10 +172,6 @@ DROP TABLE IF EXISTS modifiers;
     ModName VARCHAR(30) NOT NULL UNIQUE,
     PRIMARY KEY(IdMod)
  ); 
-
-
-
-
 
  CREATE TABLE IF NOT EXISTS characters(
     IdCharacter INT NOT NULL AUTO_INCREMENT UNIQUE,
@@ -258,7 +264,7 @@ CREATE TABLE IF NOT EXISTS Character_Buff(
     IdCharacterBuff INT NOT NULL AUTO_INCREMENT UNIQUE,
 	IdCharacter INT,
     IdBuff INT,
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacater),
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
     FOREIGN KEY (IdBuff) REFERENCES buffs(IdBuff),
     PRIMARY KEY(IdCharacterBuff)
 );
