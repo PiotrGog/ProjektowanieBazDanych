@@ -52,6 +52,7 @@ DROP TABLE IF EXISTS teams;
  CREATE TABLE IF NOT EXISTS zones(
  	IdZone INT NOT NULL UNIQUE DEFAULT 1,
     ZoneName VARCHAR(30) NOT NULL UNIQUE,
+    CHECK(ZoneName<>''),
     PRIMARY KEY(IdZone)
  );
 
@@ -68,15 +69,17 @@ DROP TABLE IF EXISTS teams;
 
  CREATE TABLE IF NOT EXISTS teams(
  	IdTeam INT NOT NULL AUTO_INCREMENT UNIQUE,
-    TeamName VARCHAR(30) UNIQUE,
+    TeamName VARCHAR(30) NOT NULL UNIQUE,
+    CHECK(TeamName<>''),
     PRIMARY KEY(IdTeam)
  );
 
  CREATE TABLE IF NOT EXISTS equipments(
 	IdEquipm INT NOT NULL AUTO_INCREMENT UNIQUE,
-    EquipmName VARCHAR(30) UNIQUE,
+    EquipmName VARCHAR(30) NOT NULL UNIQUE,
     EquipmValue INT NOT NULL DEFAULT 0,
     EquipmDescription VARCHAR(50) NOT NULL,
+    CHECK(EquipmName<>'' AND EquipmValue>=0 AND EquipmDescription<>''),
     PRIMARY KEY(IdEquipm)
  );
 
@@ -106,6 +109,7 @@ CREATE TABLE IF NOT EXISTS board(
  	IdAction INT NOT NULL AUTO_INCREMENT UNIQUE,
     ActionName VARCHAR(30) NOT NULL UNIQUE,
     ActionDescription VARCHAR(50) NOT NULL,
+    CHECK(ActionName<>'' AND ActionDescription<>''),
     PRIMARY KEY(IdAction)
  );
 
@@ -123,6 +127,7 @@ CREATE TABLE IF NOT EXISTS board(
 	IdSkill INT NOT NULL AUTO_INCREMENT UNIQUE,
     SkillName VARCHAR(30) NOT NULL UNIQUE,
     SkillDescription VARCHAR(50) NOT NULL,
+    CHECK(SkillName<>'' AND SkillDescription<>''),
     PRIMARY KEY(IdSkill)
  );
 
@@ -131,6 +136,7 @@ CREATE TABLE IF NOT EXISTS board(
 	IdSpec INT NOT NULL AUTO_INCREMENT UNIQUE,
     SpecName VARCHAR(30) NOT NULL UNIQUE,
     SpecDescription VARCHAR(50) NOT NULL,
+    CHECK(SpecName<>'' AND SpecDescription<>''),
     PRIMARY KEY(IdSpec)
  );
 
@@ -139,6 +145,7 @@ CREATE TABLE IF NOT EXISTS board(
  	IdClass INT NOT NULL AUTO_INCREMENT UNIQUE,
     ClassName VARCHAR(30) NOT NULL UNIQUE,
     ClassDescription VARCHAR(50) NOT NULL,
+    CHECK(ClassName<>'' AND ClassDescription<>''),
     PRIMARY KEY(IdClass)
  );
 
@@ -147,6 +154,7 @@ CREATE TABLE IF NOT EXISTS board(
  	IdTrump INT NOT NULL AUTO_INCREMENT UNIQUE,
     TrumpName VARCHAR(30) NOT NULL UNIQUE,
     TrumpDescription VARCHAR(50) NOT NULL,
+    CHECK(TrumpName<>'' AND TrumpDescription<>''),
     PRIMARY KEY(IdTrump)
  );
 
@@ -154,6 +162,7 @@ CREATE TABLE IF NOT EXISTS board(
 	IdRace INT NOT NULL AUTO_INCREMENT UNIQUE,
  	RaceName VARCHAR(30) NOT NULL UNIQUE,
     RaceDescription VARCHAR(50) NOT NULL,
+    CHECK(RaceName<>'' AND RaceDescription<>''),
     PRIMARY KEY(IdRace)
  );
 
@@ -163,13 +172,14 @@ CREATE TABLE IF NOT EXISTS board(
     BuffName VARCHAR(30) NOT NULL UNIQUE,
     BuffDescription VARCHAR(50) NOT NULL,
     DurationTime INT NOT NULL DEFAULT 1,
-    CHECK(DurationTime>0),
+    CHECK(BuffName<>'' AND BuffDescription<>'' AND DurationTime>0),
     PRIMARY KEY(IdBuff)
  );
 
  CREATE TABLE IF NOT EXISTS modifiers(
  	IdMod INT NOT NULL AUTO_INCREMENT UNIQUE,
     ModName VARCHAR(30) NOT NULL UNIQUE,
+    CHECK(ModName<>''),
     PRIMARY KEY(IdMod)
  ); 
 
@@ -189,7 +199,9 @@ CREATE TABLE IF NOT EXISTS board(
     IdTeam INT,
 
     CHECK (Level>=0 AND Strength>=0 AND Ability>=0 AND
-            Construction>=0 AND Intellect>=0 AND Prudence>=0 AND Charisma>=0),
+            Construction>=0 AND Intellect>=0 AND 
+            Prudence>=0 AND Charisma>=0 AND
+            Name<>''),
     FOREIGN KEY (IdField) REFERENCES fields(IdField),
     FOREIGN KEY (IdRace) REFERENCES races(IdRace),
     FOREIGN KEY (IdTeam) REFERENCES teams(IdTeam),
@@ -200,7 +212,8 @@ CREATE TABLE IF NOT EXISTS board(
  CREATE TABLE IF NOT EXISTS quests(
     IdQuest INT NOT NULL AUTO_INCREMENT UNIQUE,
     QuestDescription VARCHAR(50) NOT NULL,
-    IdCharacter INT,
+    IdCharacter INT
+    CHECK(QuestDescription<>''),
     FOREIGN KEY(IdCharacter) REFERENCES characters(IdCharacter),
     PRIMARY KEY(IdQuest)
  );
@@ -271,9 +284,9 @@ CREATE TABLE IF NOT EXISTS Character_Buff(
 
 CREATE TABLE IF NOT EXISTS Buff_Modifier(
 	IdBuffMod INT NOT NULL AUTO_INCREMENT UNIQUE,
+    ModifierValue INT NOT NULL DEFAULT 0,
     IdMod INT,
     IdBuff INT,
-    ModifierValue INT NOT NULL DEFAULT 0,
     CHECK(ModifierValue>=0),
     FOREIGN KEY (IdMod) REFERENCES modifiers(IdMod),
     FOREIGN KEY (IdBuff) REFERENCES buffs(IdBuff),
