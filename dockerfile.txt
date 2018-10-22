@@ -11,10 +11,10 @@ RUN apt-get update \
     python3-tk \
     vim \
     mc \
-    libmysqlclient-dev
+    libmysqlclient-dev \
     && apt-get clean
 
 RUN pip3 install --upgrade pip 
 RUN pip3 install \
     sqlalchemy \
-    mysqlclient
+    mysqlclient \
