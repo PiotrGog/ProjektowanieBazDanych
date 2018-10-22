@@ -2,14 +2,25 @@ version: '3'
 
 services:
 
+  scripts:
+    build:
+      context: .
+      dockerfile: dockerfile.txt
+    image: projekt_db
+    command: sleep infinty
+    restart: always
+    container_name: scripts_service
 
   mysql-dev:
     image: mysql:8.0.2
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: project_db
     ports:
       - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
 
 
   adminer:
