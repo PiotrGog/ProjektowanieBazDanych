@@ -226,3 +226,42 @@ CREATE TABLE IF NOT EXISTS Equipment_Modifier(
     PRIMARY KEY(IdEquipmMod)
     -- PRIMARY KEY(IdTreasureEquipm) 
 );
+
+CREATE TABLE IF NOT EXISTS Character_Buff(
+	IdCharacter INT,
+    IdBuff INT,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacater),
+    FOREIGN KEY (IdBuff) REFERENCES buffs(IdBuff),
+    PRIMARY KEY(IdCharacter)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Buff_Modifier(
+	IdBuffMod INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdMod INT,
+    IdBuff INT,
+    ModifierValue INT NOT NULL,
+    FOREIGN KEY (IdMod) REFERENCES modifiers(IdMod),
+    FOREIGN KEY (IdBuff) REFERENCES buffs(IdBuff),
+    PRIMARY KEY(IdBuffMod)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Race_Trump(
+	IdRaceTrump INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdTrump INT,
+    IdRace INT,
+    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump),
+    FOREIGN KEY (IdRace) REFERENCES races(IdRace),
+    PRIMARY KEY(IdRaceTrump)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
+
+CREATE TABLE IF NOT EXISTS Race_Class(
+	IdRace INT,
+    IdClass INT,
+    FOREIGN KEY (IdRace) REFERENCES races(IdRace),
+    FOREIGN KEY (IdClass) REFERENCES classes(IdClass),
+    PRIMARY KEY(IdRace)
+    -- PRIMARY KEY(IdTreasureEquipm) 
+);
