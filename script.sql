@@ -91,10 +91,14 @@ DROP TABLE IF EXISTS teams;
 
 CREATE TABLE IF NOT EXISTS board(
     IdNeighbourhood INT NOT NULL AUTO_INCREMENT UNIQUE,
-    Field_1 INT NOT NULL,
-    Field_2 INT NOT NULL,
-    FOREIGN KEY(Field_1) REFERENCES fields(IdField),
-    FOREIGN KEY(Field_2) REFERENCES fields(IdField),
+    Field_1 INT DEFAULT NULL,
+    Field_2 INT DEFAULT NULL,
+    FOREIGN KEY(Field_1) REFERENCES fields(IdField)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY(Field_2) REFERENCES fields(IdField)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     CHECK(Field_1 <> Field_2),
     PRIMARY KEY(IdNeighbourhood)
 );
@@ -195,16 +199,22 @@ CREATE TABLE IF NOT EXISTS board(
     Charisma INT NOT NULL DEFAULT 0,
 
     IdField INT,
-    IdRace INT,
-    IdTeam INT,
+    IdRace INT NOT NULL,
+    IdTeam INT DEFAULT NULL,
 
     CHECK (Level>=0 AND Strength>=0 AND Ability>=0 AND
             Construction>=0 AND Intellect>=0 AND 
             Prudence>=0 AND Charisma>=0 AND
             Name<>''),
-    FOREIGN KEY (IdField) REFERENCES fields(IdField),
-    FOREIGN KEY (IdRace) REFERENCES races(IdRace),
-    FOREIGN KEY (IdTeam) REFERENCES teams(IdTeam),
+    FOREIGN KEY (IdField) REFERENCES fields(IdField)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdRace) REFERENCES races(IdRace)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdTeam) REFERENCES teams(IdTeam)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdCharacter)
  );
 
@@ -212,221 +222,317 @@ CREATE TABLE IF NOT EXISTS board(
  CREATE TABLE IF NOT EXISTS quests(
     IdQuest INT NOT NULL AUTO_INCREMENT UNIQUE,
     QuestDescription VARCHAR(50) NOT NULL,
-    IdCharacter INT
+    IdCharacter INT,
     CHECK(QuestDescription<>''),
-    FOREIGN KEY(IdCharacter) REFERENCES characters(IdCharacter),
+    FOREIGN KEY(IdCharacter) REFERENCES characters(IdCharacter)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdQuest)
  );
 
 CREATE TABLE IF NOT EXISTS Treasure_Equipment(
 	IdTreasureEquipm INT NOT NULL AUTO_INCREMENT,
     Amount INT NOT NULL DEFAULT 1,
-    IdTreasure INT,
-    IdEquipm INT,
-    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure),
-    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    IdTreasure INT NOT NULL,
+    IdEquipm INT NOT NULL,
+    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdTreasureEquipm)
 );
 
 CREATE TABLE IF NOT EXISTS Outfit_Equipment(
     IdOutfitEquipm INT NOT NULL AUTO_INCREMENT,
-	IdOutfit INT,
-    IdEquipm INT,
-    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit),
-    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+	IdOutfit INT NOT NULL,
+    IdEquipm INT NOT NULL,
+    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdOutfitEquipm)
 );
 
 CREATE TABLE IF NOT EXISTS Outfit_Zone(
     IdOutfitZone INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdOutfit INT,
-    IdZone INT,
-    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit),
-    FOREIGN KEY (IdZone) REFERENCES zones(IdZone),
+	IdOutfit INT NOT NULL,
+    IdZone INT NOT NULL,
+    FOREIGN KEY (IdOutfit) REFERENCES outfits(IdOutfit)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdZone) REFERENCES zones(IdZone)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY (IdOutfitZone)
 );
 
 CREATE TABLE IF NOT EXISTS Equipment_Zone(
     IdEquipmentZone INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdEquipm INT,
-    IdZone INT,
-    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
-    FOREIGN KEY (IdZone) REFERENCES zones(IdZone),
+	IdEquipm INT NOT NULL,
+    IdZone INT NOT NULL,
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdZone) REFERENCES zones(IdZone)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY (IdEquipmentZone)
 );
     
 CREATE TABLE IF NOT EXISTS Trump_Equipment(
 	IdTrumpEquipment INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdTrump INT,
-    IdEquipm INT,
-    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump),
-    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+	IdTrump INT NOT NULL,
+    IdEquipm INT NOT NULL,
+    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdTrumpEquipment)
 );
 
 CREATE TABLE IF NOT EXISTS Equipment_Modifier(
 	IdEquipmMod INT NOT NULL AUTO_INCREMENT UNIQUE,
-    IdMod INT,
-    IdEquipm INT,
-    FOREIGN KEY (IdMod) REFERENCES modifiers(IdMod),
-    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    IdMod INT NOT NULL,
+    IdEquipm INT NOT NULL,
+    FOREIGN KEY (IdMod) REFERENCES modifiers(IdMod)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdEquipmMod)
 );
 
 CREATE TABLE IF NOT EXISTS Character_Buff(
     IdCharacterBuff INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdCharacter INT,
-    IdBuff INT,
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
-    FOREIGN KEY (IdBuff) REFERENCES buffs(IdBuff),
+	IdCharacter INT NOT NULL,
+    IdBuff INT NOT NULL,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdBuff) REFERENCES buffs(IdBuff)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdCharacterBuff)
 );
 
 CREATE TABLE IF NOT EXISTS Buff_Modifier(
 	IdBuffMod INT NOT NULL AUTO_INCREMENT UNIQUE,
     ModifierValue INT NOT NULL DEFAULT 0,
-    IdMod INT,
-    IdBuff INT,
+    IdMod INT NOT NULL,
+    IdBuff INT NOT NULL,
     CHECK(ModifierValue>=0),
-    FOREIGN KEY (IdMod) REFERENCES modifiers(IdMod),
-    FOREIGN KEY (IdBuff) REFERENCES buffs(IdBuff),
+    FOREIGN KEY (IdMod) REFERENCES modifiers(IdMod)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdBuff) REFERENCES buffs(IdBuff)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdBuffMod)
 );
 
 CREATE TABLE IF NOT EXISTS Race_Trump(
 	IdRaceTrump INT NOT NULL AUTO_INCREMENT UNIQUE,
-    IdTrump INT,
-    IdRace INT,
-    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump),
-    FOREIGN KEY (IdRace) REFERENCES races(IdRace),
+    IdTrump INT NOT NULL,
+    IdRace INT NOT NULL,
+    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdRace) REFERENCES races(IdRace)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdRaceTrump)
 );
 
 CREATE TABLE IF NOT EXISTS Race_Class(
     IdRaceClass INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdRace INT,
-    IdClass INT,
-    FOREIGN KEY (IdRace) REFERENCES races(IdRace),
-    FOREIGN KEY (IdClass) REFERENCES classes(IdClass),
+	IdRace INT NOT NULL,
+    IdClass INT NOT NULL,
+    FOREIGN KEY (IdRace) REFERENCES races(IdRace)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdClass) REFERENCES classes(IdClass)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdRaceClass)
 );
 
 CREATE TABLE IF NOT EXISTS Character_Specialization(
-	IdCharSpec INT NOT NULL AUTO_INCREMENT UNIQUE ,
-    IdCharacter INT,
-    IdSpec INT,
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
-    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec),
+	IdCharSpec INT NOT NULL AUTO_INCREMENT UNIQUE,
+    IdCharacter INT NOT NULL, 
+    IdSpec INT NOT NULL,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdCharSpec)
 );
 
 CREATE TABLE IF NOT EXISTS Specialization_Trump(
 	IdSpecTrump INT NOT NULL AUTO_INCREMENT UNIQUE,
-    IdTrump INT,
-    IdSpec INT,
-    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump),
-    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec),
+    IdTrump INT NOT NULL,
+    IdSpec INT NOT NULL,
+    FOREIGN KEY (IdTrump) REFERENCES trumps(IdTrump)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdSpecTrump)
 );
 
 CREATE TABLE IF NOT EXISTS Specialization_Skill(
     IdSpecializationSkill INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdSpec INT,
-    IdSkill INT,
-    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill),
-    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec),
+	IdSpec INT NOT NULL,
+    IdSkill INT NOT NULL,
+    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdSpec) REFERENCES specializations(IdSpec)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdSpecializationSkill)
 );
 
 CREATE TABLE IF NOT EXISTS Roll_Skill(
     IdRollSkill INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdRoll INT,
-    IdSkill INT,
-    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill),
-    FOREIGN KEY (IdRoll) REFERENCES rolls(IdRoll),
+	IdRoll INT NOT NULL,
+    IdSkill INT NOT NULL,
+    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdRoll) REFERENCES rolls(IdRoll)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdRollSkill)
 );
 
 CREATE TABLE IF NOT EXISTS Action_Skill(
     IdActionSkill INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdAction INT,
-    IdSkill INT,
-    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill),
-    FOREIGN KEY (IdAction) REFERENCES actions(IdAction),
+	IdAction INT NOT NULL,
+    IdSkill INT NOT NULL,
+    FOREIGN KEY (IdSkill) REFERENCES skills(IdSkill)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdAction) REFERENCES actions(IdAction)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdActionSkill)
 );
 
 CREATE TABLE IF NOT EXISTS Round_Action(
 	IdRoundAction INT NOT NULL AUTO_INCREMENT UNIQUE,
-    IdRound INT,
-    IdAction INT,
-    FOREIGN KEY (IdRound) REFERENCES rounds(IdRound),
-    FOREIGN KEY (IdAction) REFERENCES actions(IdAction),
+    IdRound INT NOT NULL,
+    IdAction INT NOT NULL,
+    FOREIGN KEY (IdRound) REFERENCES rounds(IdRound)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdAction) REFERENCES actions(IdAction)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdRoundAction)
 );
 
 CREATE TABLE IF NOT EXISTS Character_Quest(
     IdCharacterQuest INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdQuest INT,
-    IdCharacter INT,
-    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest),
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+	IdQuest INT NOT NULL,
+    IdCharacter INT NOT NULL,
+    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdCharacterQuest)
 );
 
 CREATE TABLE IF NOT EXISTS Character_Action(
 	IdCharacterAction INT NOT NULL AUTO_INCREMENT UNIQUE,
-    IdCharacter INT,
-    IdAction INT,
-    FOREIGN KEY (IdAction) REFERENCES actions(IdAction),
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
+    IdCharacter INT NOT NULL,
+    IdAction INT NOT NULL,
+    FOREIGN KEY (IdAction) REFERENCES actions(IdAction)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdCharacterAction)
 );
 
 CREATE TABLE IF NOT EXISTS Treasure_Quest(
     IdTreasureQuest INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdQuest INT,
-    IdTreasure INT,
-    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest),
-    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure),
+	IdQuest INT NOT NULL,
+    IdTreasure INT NOT NULL,
+    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdTreasureQuest)
 );
 
 CREATE TABLE IF NOT EXISTS Character_Zone(
 	IdCharacterZone INT NOT NULL AUTO_INCREMENT UNIQUE,
-    IdCharacter INT,
-    IdZone INT,
-    IdEquipm INT,
-    FOREIGN KEY (IdZone) REFERENCES zones(IdZone),
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
-    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    IdCharacter INT NOT NULL,
+    IdZone INT NOT NULL,
+    IdEquipm INT NOT NULL,
+    FOREIGN KEY (IdZone) REFERENCES zones(IdZone)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdCharacterZone)
 );
 
 CREATE TABLE IF NOT EXISTS Character_Equipment(
     IdCharacterEquipm INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdCharacter INT,
-    IdEquipm INT,
+	IdCharacter INT NOT NULL,
+    IdEquipm INT NOT NULL,
     Amount INT NOT NULL,
-    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter),
-    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm),
+    FOREIGN KEY (IdCharacter) REFERENCES characters(IdCharacter)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdEquipm) REFERENCES equipments(IdEquipm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdCharacterEquipm)
 );
 
 CREATE TABLE IF NOT EXISTS Treasure_Field(
     IdTreasureField INT NOT NULL AUTO_INCREMENT UNIQUE,
-	IdField INT,
-    IdTreasure INT,
-    FOREIGN KEY (IdField) REFERENCES fields(IdField),
-    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure),
+	IdField INT NOT NULL,
+    IdTreasure INT NOT NULL,
+    FOREIGN KEY (IdField) REFERENCES fields(IdField)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdTreasure) REFERENCES treasures(IdTreasure)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdTreasureField)
 );
 
 CREATE TABLE IF NOT EXISTS Quest_Action(
 	IdQuestAction INT NOT NULL AUTO_INCREMENT UNIQUE,
-    IdQuest INT,
-    IdAction INT,
-    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest),
-    FOREIGN KEY (IdAction) REFERENCES actions(IdAction),
+    IdQuest INT NOT NULL,
+    IdAction INT NOT NULL,
+    FOREIGN KEY (IdQuest) REFERENCES quests(IdQuest)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (IdAction) REFERENCES actions(IdAction)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
     PRIMARY KEY(IdQuestAction)
 );
