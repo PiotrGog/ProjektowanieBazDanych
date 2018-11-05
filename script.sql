@@ -86,6 +86,9 @@ DROP TABLE IF EXISTS teams;
 
  CREATE TABLE IF NOT EXISTS fields(
  	IdField INT NOT NULL AUTO_INCREMENT UNIQUE,
+ 	XCoordinate INT NOT NULL,
+ 	YCoordinate INT NOT NULL,
+ 	CHECK(XCoordinate >= 0 AND YCoordinate >= 0),
     PRIMARY KEY(IdField)
  );
 
@@ -135,16 +138,6 @@ CREATE TABLE IF NOT EXISTS board(
     PRIMARY KEY(IdSkill)
  );
 
-
- CREATE TABLE IF NOT EXISTS specializations(
-	IdSpec INT NOT NULL AUTO_INCREMENT UNIQUE,
-    SpecName VARCHAR(30) NOT NULL UNIQUE,
-    SpecDescription VARCHAR(50) NOT NULL,
-    CHECK(SpecName<>'' AND SpecDescription<>''),
-    PRIMARY KEY(IdSpec)
- );
-
-
  CREATE TABLE IF NOT EXISTS classes(
  	IdClass INT NOT NULL AUTO_INCREMENT UNIQUE,
     ClassName VARCHAR(30) NOT NULL UNIQUE,
@@ -152,7 +145,19 @@ CREATE TABLE IF NOT EXISTS board(
     CHECK(ClassName<>'' AND ClassDescription<>''),
     PRIMARY KEY(IdClass)
  );
+ 
+ CREATE TABLE IF NOT EXISTS specializations(
+	IdSpec INT NOT NULL AUTO_INCREMENT UNIQUE,
+    SpecName VARCHAR(30) NOT NULL UNIQUE,
+    SpecDescription VARCHAR(50) NOT NULL,
 
+    IdClass INT,
+    FOREIGN KEY (IdClass) REFERENCES classes(IdClass)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CHECK(SpecName<>'' AND SpecDescription<>''),
+    PRIMARY KEY(IdSpec)
+ );
 
  CREATE TABLE IF NOT EXISTS trumps(
  	IdTrump INT NOT NULL AUTO_INCREMENT UNIQUE,

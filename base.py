@@ -105,3 +105,4 @@ for spec in SCECIALIZATIONS:
 session.add_all(specs)
 session.commit()
 connection.close()
+
