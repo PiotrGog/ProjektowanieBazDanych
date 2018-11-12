@@ -96,6 +96,7 @@ session.add_all(specs)
 session.commit()
 connection.close()
 
+<<<<<<< HEAD
 
 
 # FILL THE CLASSES TABLE
@@ -329,3 +330,5 @@ import random
 # session.commit()
 # connection.close()
 
+=======
+>>>>>>> 2ffca2590fad518618859db9ac774f44ea1cdea8
