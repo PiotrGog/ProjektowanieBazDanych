@@ -1,4 +1,4 @@
-use project_db;
+use rpg_game;
 
 
 DROP TABLE IF EXISTS Treasure_Equipment;
@@ -23,6 +23,8 @@ DROP TABLE IF EXISTS Character_Quest;
 DROP TABLE IF EXISTS Round_Action;
 DROP TABLE IF EXISTS Action_Skill;
 DROP TABLE IF EXISTS Race_Class;
+DROP TABLE IF EXISTS Action_Target;
+DROP TABLE IF EXISTS Action_Target_Round;
 
 DROP TABLE IF EXISTS zones;
 DROP TABLE IF EXISTS treasures;
@@ -44,9 +46,6 @@ DROP TABLE IF EXISTS classes;
 DROP TABLE IF EXISTS teams;
 
 
-
-
-
  CREATE TABLE IF NOT EXISTS zones(
  	IdZone INT NOT NULL UNIQUE DEFAULT 1,
     ZoneName VARCHAR(30) NOT NULL UNIQUE,
@@ -60,10 +59,6 @@ DROP TABLE IF EXISTS teams;
     PRIMARY KEY(IdTreasure)
  );
 
- CREATE TABLE IF NOT EXISTS outfits(
- 	IdOutfit INT NOT NULL AUTO_INCREMENT UNIQUE,
-    PRIMARY KEY(IdOutfit)
- );
 
  CREATE TABLE IF NOT EXISTS teams(
  	IdTeam INT NOT NULL AUTO_INCREMENT UNIQUE,
@@ -200,6 +195,9 @@ CREATE TABLE IF NOT EXISTS board(
     Intellect INT NOT NULL DEFAULT 0,
     Prudence INT NOT NULL DEFAULT 0,
     Charisma INT NOT NULL DEFAULT 0,
+    BaseHP INT NOT NULL DEFAULT 0,
+    CurrentHP INT NOT NULL DEFAULT 0,
+    BaseDamage INT NOT NULL DEFAULT 0,
 
     IdField INT,
     IdRace INT NOT NULL,
@@ -515,3 +513,29 @@ CREATE TABLE IF NOT EXISTS Quest_Action(
     ON UPDATE CASCADE,
     PRIMARY KEY(IdQuestAction)
 );
+
+ CREATE TABLE IF NOT EXISTS Action_Target(
+    IdActionTarget INT NOT NULL UNIQUE DEFAULT 1,
+    IdCharacterAction INT NOT NULL,
+    IdField INT NOT NULL,
+    FOREIGN KEY( IdCharacterAction) REFERENCES Character_Action(IdCharacterAction)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY(IdField) REFERENCES fields(IdField)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    PRIMARY KEY(IdActionTarget)
+ );
+
+ CREATE TABLE IF NOT EXISTS Action_Target_Round(
+    IdActionTargetRound INT NOT NULL UNIQUE DEFAULT 1,
+    IdActionTarget INT NOT NULL,
+    IdRound INT NOT NULL,
+    FOREIGN KEY(IdActionTarget) REFERENCES Action_Target(IdActionTarget)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY(IdRound) REFERENCES rounds(IdRound)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    PRIMARY KEY(IdActionTargetRound)
+ );

@@ -7,11 +7,20 @@ SELECT * FROM characters WHERE IdCharachter == given_id;
 
 SELECT Strength, Ability, Construction, Intellect, Proudence, Charisma FROM characters WHERE IdCharachter == given_id;
 
-SELECT buff_modifers.ModiferValue, modifers.ModName FROM modifers 
-	JOIN buff_modifer ON modifers.IdMod == buff_modifer.IdMod
-		JOIN character_buff ON character_buff.IdBuff == buff_modifer.IdBuff
-			JOIN characters ON character_buff.IdCharacter == characters.IdCharacter
-				WHERE IdCharachter == given_id;
+SELECT buff_modifers.ModiferValue, modifers.ModName, zones.ZoneName, equipments.EquipmName FROM equipments 
+	JOIN equipment_zone ON equipment_zone.IdEquipm == equipments.IdEquipm
+		JOIN zones ON zones.IdZone == equipment_zone.IdZone
+		    JOIN character_zone ON charackter_zone.IdZone == zones.IdZone	
+				WHERE character_zone.IdCharachter == given_id;	
+
+
+
+
+-- FROM modifers 
+-- 	JOIN buff_modifer ON modifers.IdMod == buff_modifer.IdMod
+-- 		JOIN character_buff ON character_buff.IdBuff == buff_modifer.IdBuff
+-- 			JOIN characters ON character_buff.IdCharacter == characters.IdCharacter
+-- 				WHERE IdCharachter == given_id;
 
 SELECT zones.ZoneName, equipments.EquipmName FROM equipments 
 	JOIN equipment_zone ON equipment_zone.IdEquipm == equipments.IdEquipm
@@ -62,6 +71,7 @@ INSERT INTO characters (Name, Level, Stregth, Intellect, Prodence, Charisma, IdF
 	VALUES ("Valeria Windrunner", 76, 12, 8, 16, 17, 2, 4, 1);
 3_1
 
+SELECT character.IdCaracter, characters.Level, characters.Name FROM charachters;
 
 SELECT COUNT(IdCharacter) FROM characters ;
 
@@ -88,11 +98,10 @@ SELECT COUNT(IdCharacter) FROM characters WHERE
 
 SELECT * FROM characters WHERE IdCharachter == given_id;
 
-SELECT * FROM characters WHERE IdCharachter == given_id;
 
 4
 
-SELECT round_action.IdRound, actions,ActionName, rolls.Dice, rolls.DiceAmount, skills.SkillName, characters.Name, charachters.Attack FROM rounds 
+SELECT round_action.IdRound, actions,ActionName, rolls.Dice, rolls.DiceAmount, skills.SkillName, characters.Name, charachters.BaseAttack FROM rounds 
 	JOIN action ON round_action.IdAction == actions.IdAction
 		JOIN character_action ON character_action.IdAction == actions.IdAction
 			JOIN characters ON characters.IdCharacter == character_action.IdCharacter
