@@ -68,105 +68,107 @@ session.commit()
 
 
 
-# # FILL THE RACES TABLE
-# with open('races.txt', encoding='latin-1') as f:
-#     RACES_NAME_DESCR = f.read().splitlines()
+# FILL THE RACES TABLE
+with open('races.txt', encoding='latin-1') as f:
+    RACES_NAME_DESCR = f.read().splitlines()
 
-# races = []
-# for race in RACES_NAME_DESCR:
-#     print(race)
-#     race= race.split(';')
-#     races.append(Races(RaceName=race[0], RaceDescription =race[1]))
+races = []
+for race in RACES_NAME_DESCR:
+    print(race)
+    race= race.split(';')
+    races.append(Races(RaceName=race[0], RaceDescription =race[1]))
 
-# session.add_all(races)
-# session.commit()
-
-
-
-# # FILL THE SPECIALIZATION TABLE
-# with open('classes.txt', encoding='latin-1') as f:
-#     SCECIALIZATIONS = f.read().splitlines()
-
-# specs = []
-# for spec in SCECIALIZATIONS:
-#     print(spec)
-#     spec = spec.split(':')
-#     specs.append(Specializations(SpecName=spec[0], SpecDescription =spec[1]))
-
-# session.add_all(specs)
-# session.commit()
-# connection.close()
+session.add_all(races)
+session.commit()
 
 
 
-# # FILL THE CLASSES TABLE
-# with open('basic_classes.txt', encoding='latin-1') as f:
-#     CLASSES = f.read().splitlines()
+# FILL THE SPECIALIZATION TABLE
+with open('classes.txt', encoding='latin-1') as f:
+    SCECIALIZATIONS = f.read().splitlines()
+
+specs = []
+for spec in SCECIALIZATIONS:
+    print(spec)
+    spec = spec.split(':')
+    specs.append(Specializations(SpecName=spec[0], SpecDescription =spec[1]))
+
+session.add_all(specs)
+session.commit()
+connection.close()
 
 
-# classes = []
-# for clas in CLASSES:
-#     print(clas)
-#     clas = clas.split(':')
-#     classes.append(Classes(ClassName=clas[0], ClassDescription =clas[1]))
 
-# session.add_all(classes)
-# session.commit()
+# FILL THE CLASSES TABLE
+with open('basic_classes.txt', encoding='latin-1') as f:
+    CLASSES = f.read().splitlines()
 
 
-# # FILL THE ACTIONS TABLE
-# ACTIONS = [("Attack", "Attack another object"), ("Block", "Block some attack"), ("Throw spell", "Throw spell from your magic book"), ("Move forward", "Do one step forward"), ("Move backward", "Do one step backward"), ("Move left", "Do one step left"), ("Move right", "Do one step right"), ("Move left front", "Do one step diagonally to left front"), ("Move left back", "Do one step diagonally to left back"), ("Move right front", "Do one step diagonally to right front"), ("Move right back", "Do ne step diagonally to right back"), ("Talk", "Talk to some champion"), ("Bait", "Provoke some champion"), ("pick up", "Pick up some item"), ("Throw up", "Throw up some item"), ("Accept quest", "Accept some quest from principal"), ("Sleep", "Sleep for some time"), ("Fight", "Start fight with some other player"), ("Jump", "Just jump"), ("Sit", "Sit at some object prepared to do id"), ("Dig", "Dig to find some brecleaus"), ("Bow shot", "Shot from a bow"), ("Crossbow shot", "Shot from a crossbow"), ("Wear", "Wear some item"), ("Get reward", "Get reward for some quest"), ("Get on ship", "Just get on ship"), ("Get on horse", "Just get on horse"), ("Get on dragon", "Just get on some dragon"), ("Some cigarette", "Relax"), ("Eat", "Eat something"), ("Drink", "Drink something"), ("Take elixir", "Drink some elixir"), ("Buff", "Buff someon or someone else"), ("Learn spell", "Learn some spell"), ("Learn skill", "Learn some skill"), ("Get a level", "Get a new level"), ("Complete quest", "Complete some quest"), ("Read", "Read book or scroll"), ("Write", "Write on book or on scroll"), ("Send", "Send message to someon"), ("Call horse", "Order your horse to come to you")]
+classes = []
+for clas in CLASSES:
+    print(clas)
+    clas = clas.split(':')
+    classes.append(Classes(ClassName=clas[0], ClassDescription =clas[1]))
 
-# actions =[]
+session.add_all(classes)
+session.commit()
 
-# for act in ACTIONS:
-#     print(act)
-#     actions.append(Actions(ActionName=act[0], ActionDescription =act[1]))
-# session.add_all(actions)
-# session.commit()
 
-# # FILL THE BUFFS TABLE
-# BUFFS = [("Attack upgrage", "Upgrade your attack skill"), ("Def upgrade", "Upgrade your defence skill"), ("Dexterity upgrade", "Upgrade your dexterity skill"), ("Power upgrade", "Upgrade your magic power"), ("Knowledge upgrade", "Upgrade your knowledge"), ("Health upgrade", "Upgrade your maximum level of health"), ("Thief skills upgrade", "Upgrade your thief skills"), ("Mana upgrade", "Upgrade your maximum level of mana"), ("Right hand upgrade", "Upgrade one-handed weapon skills"), ("Left hand upgrade", "Upgrade shield using skills"), ("Strong muscles", "Two-handed weapon upgrade"), ("Heavy armor upgrade", "Upgrade statistics of heavy armor"), ("Med armor upgrade", "Upgrade statistics of medium armor"), ("Light armor upgrade", "Upgrade statistics of light armor"), ("Eagle eye", "Upgrade your accurity"), ("Long seeing", "You can see further"), ("7-miles shoues", "You can go thru 2 fields in one move"), ("Troll regeneration", "Your health regenerates 2x faster"), ("Mana regeneration", "Your mana regenerates 2x faster"), ("Usain Bolt", "Your energy regenerates 2x faster"), ("Good taste", "Food and drinks work faster"), ("Toxic blood", "Elixirs work faster"), ("Strong head", "Alkohol doesn't work"), ("Rock skin", "Arrows mean nothing to you"), ("Magic shield", "Magical damage reduced to 50%"), ("Hard skin", "Physical damages reduced to 50%"), ("Golem", "Physical damages reduced to 10%"), ("Quick hands", "You can do 2 attacks in one move"), ("Better helmets", "Helmets work better"), ("Better boots", "Boots work better"), ("Better gloves", "Gloves work better"), ("Better trousers", "Trousers work better")]
-# buffs = []
+# FILL THE ACTIONS TABLE
+ACTIONS = [("Attack", "Attack another object"), ("Block", "Block some attack"), ("Throw spell", "Throw spell from your magic book"), ("Move forward", "Do one step forward"), ("Move backward", "Do one step backward"), ("Move left", "Do one step left"), ("Move right", "Do one step right"), ("Move left front", "Do one step diagonally to left front"), ("Move left back", "Do one step diagonally to left back"), ("Move right front", "Do one step diagonally to right front"), ("Move right back", "Do ne step diagonally to right back"), ("Talk", "Talk to some champion"), ("Bait", "Provoke some champion"), ("pick up", "Pick up some item"), ("Throw up", "Throw up some item"), ("Accept quest", "Accept some quest from principal"), ("Sleep", "Sleep for some time"), ("Fight", "Start fight with some other player"), ("Jump", "Just jump"), ("Sit", "Sit at some object prepared to do id"), ("Dig", "Dig to find some brecleaus"), ("Bow shot", "Shot from a bow"), ("Crossbow shot", "Shot from a crossbow"), ("Wear", "Wear some item"), ("Get reward", "Get reward for some quest"), ("Get on ship", "Just get on ship"), ("Get on horse", "Just get on horse"), ("Get on dragon", "Just get on some dragon"), ("Some cigarette", "Relax"), ("Eat", "Eat something"), ("Drink", "Drink something"), ("Take elixir", "Drink some elixir"), ("Buff", "Buff someon or someone else"), ("Learn spell", "Learn some spell"), ("Learn skill", "Learn some skill"), ("Get a level", "Get a new level"), ("Complete quest", "Complete some quest"), ("Read", "Read book or scroll"), ("Write", "Write on book or on scroll"), ("Send", "Send message to someon"), ("Call horse", "Order your horse to come to you")]
 
-# for buff in BUFFS:
-#     print(buff)
-#     buffs.append(Buffs(BuffName=buff[0], BuffDescription =buff[1]))
-# session.add_all(buffs)
-# session.commit()
+actions =[]
 
-# # FILL THE MODIFERS TABLE
-# MODIFIRES = ["Attack modifier", "Def modifier", "Dexterity modifier", "Energy modifier", "Mana modifier", "Health modifier", "Accuraty modifier", "Knowledge modifier", "Power modifier", "Thief modifier", "Strong modifier", "Health regen modifier", "Mana regen modifier", "Toxic modifier", "Eagle eye modifier", "Magical shield modifier", "Head modifier", "Helmet modifier", "Gloves modifier", "Boots modifier", "Trousers modifier", "Hard skin modifier", "Rock skin modifier", "Elixir modifier", "Spell modifier", "Bow modifier", "Crossbow modifier", "Left hand modifier", "Right hand modifier", "Lucky modifier", "Wisdom modifier", "Muscles modifier", "Two-handed weapon modifier", "Fire spells modifier", "Water spells modifier", "Earth spells modifier", "Air spells modifier", "Mind spells modifier", "Utility spells modifier", "Call spells modifier", "Move modifier",]
-# mods = []
-# for mod in MODIFIRES:
-#     print(mod)
-#     mods.append(Modifiers(ModName=mod))
-# session.add_all(mods)
-# session.commit()
+for act in ACTIONS:
+    print(act)
+    actions.append(Actions(ActionName=act[0], ActionDescription =act[1]))
+session.add_all(actions)
+session.commit()
 
-# # FILL THE ZONES TABLE
-# ZONES = [ "Left Foot", "Right foot", "Left leg", "Right leg", "Belt", "Left hand", "Right hand", "Left forearm", "Right forearm", "Left arm", "Right arm", "Trunk", "Neck", "Left ear", "Right ear", "Left finger", "Rigt finger", "Tail", "Eyes"]
-# zones = []
-# for zon in ZONES:
-#     print(zon)
-#     zones.append(Modifiers(ModName=zon))
-# session.add_all(zones)
-# session.commit()
+# FILL THE BUFFS TABLE
+BUFFS = [("Attack upgrage", "Upgrade your attack skill"), ("Def upgrade", "Upgrade your defence skill"), ("Dexterity upgrade", "Upgrade your dexterity skill"), ("Power upgrade", "Upgrade your magic power"), ("Knowledge upgrade", "Upgrade your knowledge"), ("Health upgrade", "Upgrade your maximum level of health"), ("Thief skills upgrade", "Upgrade your thief skills"), ("Mana upgrade", "Upgrade your maximum level of mana"), ("Right hand upgrade", "Upgrade one-handed weapon skills"), ("Left hand upgrade", "Upgrade shield using skills"), ("Strong muscles", "Two-handed weapon upgrade"), ("Heavy armor upgrade", "Upgrade statistics of heavy armor"), ("Med armor upgrade", "Upgrade statistics of medium armor"), ("Light armor upgrade", "Upgrade statistics of light armor"), ("Eagle eye", "Upgrade your accurity"), ("Long seeing", "You can see further"), ("7-miles shoues", "You can go thru 2 fields in one move"), ("Troll regeneration", "Your health regenerates 2x faster"), ("Mana regeneration", "Your mana regenerates 2x faster"), ("Usain Bolt", "Your energy regenerates 2x faster"), ("Good taste", "Food and drinks work faster"), ("Toxic blood", "Elixirs work faster"), ("Strong head", "Alkohol doesn't work"), ("Rock skin", "Arrows mean nothing to you"), ("Magic shield", "Magical damage reduced to 50%"), ("Hard skin", "Physical damages reduced to 50%"), ("Golem", "Physical damages reduced to 10%"), ("Quick hands", "You can do 2 attacks in one move"), ("Better helmets", "Helmets work better"), ("Better boots", "Boots work better"), ("Better gloves", "Gloves work better"), ("Better trousers", "Trousers work better")]
+buffs = []
 
-# # FILL THE FIELDS TABLE
-# fields = []
-# for x in range(15000):
+for buff in BUFFS:
+    print(buff)
+    buffs.append(Buffs(BuffName=buff[0], BuffDescription =buff[1]))
+session.add_all(buffs)
+session.commit()
+
+# FILL THE MODIFERS TABLE
+MODIFIRES = ["Attack modifier", "Def modifier", "Dexterity modifier", "Energy modifier", "Mana modifier", "Health modifier", "Accuraty modifier", "Knowledge modifier", "Power modifier", "Thief modifier", "Strong modifier", "Health regen modifier", "Mana regen modifier", "Toxic modifier", "Eagle eye modifier", "Magical shield modifier", "Head modifier", "Helmet modifier", "Gloves modifier", "Boots modifier", "Trousers modifier", "Hard skin modifier", "Rock skin modifier", "Elixir modifier", "Spell modifier", "Bow modifier", "Crossbow modifier", "Left hand modifier", "Right hand modifier", "Lucky modifier", "Wisdom modifier", "Muscles modifier", "Two-handed weapon modifier", "Fire spells modifier", "Water spells modifier", "Earth spells modifier", "Air spells modifier", "Mind spells modifier", "Utility spells modifier", "Call spells modifier", "Move modifier",]
+mods = []
+for mod in MODIFIRES:
+    print(mod)
+    mods.append(Modifiers(ModName=mod))
+session.add_all(mods)
+session.commit()
+
+# FILL THE ZONES TABLE
+ZONES = [ "Left Foot", "Right foot", "Left leg", "Right leg", "Belt", "Left hand", "Right hand", "Left forearm", "Right forearm", "Left arm", "Right arm", "Trunk", "Neck", "Left ear", "Right ear", "Left finger", "Rigt finger", "Tail", "Eyes"]
+zones = []
+for zon in ZONES:
+    print(zon)
+    zones.append(Modifiers(ModName=zon))
+session.add_all(zones)
+session.commit()
+
+# FILL THE FIELDS TABLE
+fields = []
+for x in range(15000):
      
-#     fields.append(Fields())
-# session.add_all(fields)
-# session.commit()
+    fields.append(Fields(XCoordinate,YCoordinate))
+session.add_all(fields)
+session.commit()
 
-# # FILL THE BUFFS TABLE
-# neibors = []
-# for x in range(25000):
-#     neibors.append(Board(Field_1 = randint(1,15000), Field_2 = randint(1,15000)))
-# session.add_all(neibors)
-# session.commit()
+buffs_id = session.query(Buffs.IdBuff).all()
+mod_id = session.query(Modifiers.IdMode).all()
+# FILL THE BUFFS TABLE
+neibors = []
+for x in range(25000):
+    neibors.append(Board(Field_1 = randint(1,15000), Field_2 = randint(1,15000)))
+session.add_all(neibors)
+session.commit()
 
 
 # # FILL THE BUFFS TABLE
