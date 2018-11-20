@@ -1,6 +1,6 @@
 1_1
 
-SELECT * FROM characters WHERE IdCharachter == given_id;
+SELECT * FROM characters WHERE IdCharacter = 2;
 
 1_2
 
@@ -67,16 +67,18 @@ SELECT actions.Name, actions.description, rolls.Dice, rolls.Dice_amount FROM cha
 							JOIN rolls ON rolls.IdRoll == roll_skill.IdRoll;			
 2
 
-INSERT INTO characters (Name, Level, Stregth, Intellect, Prodence, Charisma, IdField, IdRace, IdTeam)
-	VALUES ("Valeria Windrunner", 76, 12, 8, 16, 17, 2, 4, 1);
+INSERT INTO characters (Name, Level, Strength, Intellect, Prudence, Charisma, IdField, IdRace, IdTeam) 
+		VALUES ("Valeria Windrunner", 76, 12, 8, 16, 17, 2, 4, 1)
 3_1
 
-SELECT character.IdCaracter, characters.Level, characters.Name FROM charachters;
+SELECT characters.IdCharacter, characters.Level, characters.Name FROM characters
 
 SELECT COUNT(IdCharacter) FROM characters ;
 
-SELECT COUNT(IdCharacter) FROM characters WHERE
-	charchters.Strength >= our_character_strength;
+SELECT COUNT(IdCharacter) FROM characters 
+	WHERE characters.Strength >= 9
+	DIV SELECT COUNT(IdCharacter) FROM characters ;
+
 
 SELECT COUNT(IdCharacter) FROM characters WHERE
 	charchters.Dexterity >= our_character_dexterity;
