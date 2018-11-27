@@ -1,113 +1,134 @@
-1_1
-
+---------------------------------------------------------------------------
+-- CHARACTER
+-- 1
 SELECT * FROM characters WHERE IdCharacter = 2;
 
-1_2
+-- 2
+SELECT zones.IdZone, equipments.EquipmName
+FROM equipments
+INNER JOIN Character_Zone_Equipment ON (equipments.IdEquipm = Character_Zone_Equipment.IdEquipm 
+										AND Character_Zone_Equipment.IdCharacter=1)
+RIGHT JOIN zones ON (Character_Zone_Equipment.IdZone = zones.IdZone);
+
+-- 3
+-- 4
+
+SELECT modifiers.ModName, zones.ZoneName, n.EquipmName, o.EquipmName, n.maxMV, o.maxMV, o.maxMV-n.maxMV
+FROM (
+    (SELECT Character_Zone_Equipment.IdZone, equipments.EquipmName, MAX(Equipment_Modifier.ModifierValue) as maxMV, modifiers.ModName, modifiers.IdMod
+    FROM Character_Zone_Equipment
+    INNER JOIN equipments ON (equipments.IdEquipm=Character_Zone_Equipment.IdEquipm AND Character_Zone_Equipment.IdCharacter=6082)
+    INNER JOIN Equipment_Modifier ON (Equipment_Modifier.IdEquipm=equipments.IdEquipm)
+    RIGHT JOIN modifiers ON (modifiers.IdMod=Equipment_Modifier.IdMod)
+    INNER JOIN Equipment_Zone ON (Equipment_Zone.IdEquipm=equipments.IdEquipm)
+    GROUP BY Equipment_Zone.IdZone) AS o
+)
+INNER JOIN 
+    (SELECT Equipment_Zone.IdZone, Character_Equipment.IdEquipm, equipments.EquipmName, MAX(Equipment_Modifier.ModifierValue) as maxMV, modifiers.ModName, modifiers.IdMod
+    FROM Character_Equipment 
+    INNER JOIN equipments ON (equipments.IdEquipm=Character_Equipment.IdEquipm AND Character_Equipment.IdCharacter=6082)
+    INNER JOIN Equipment_Modifier ON (Equipment_Modifier.IdEquipm=equipments.IdEquipm)
+    RIGHT JOIN modifiers ON (modifiers.IdMod=Equipment_Modifier.IdMod)
+    INNER JOIN Equipment_Zone ON (Equipment_Zone.IdEquipm=equipments.IdEquipm)
+    WHERE modifiers.IdMod=7
+    GROUP BY Equipment_Zone.IdZone) as n
+ON (n.IdZone=o.IdZone)
+INNER JOIN zones ON (zones.IdZone=o.IdZone)
+INNER JOIN Equipment_Modifier ON (Equipment_Modifier.IdEquipm=n.IdEquipm)
+RIGHT JOIN modifiers ON (modifiers.IdMod=Equipment_Modifier.IdMod)
+GROUP BY modifiers.IdMod, zones.IdZone;
 
 
-SELECT Strength, Ability, Construction, Intellect, Proudence, Charisma FROM characters WHERE IdCharachter == given_id;
+-- 5
+SELECT nM.ModName, nM.MSUM AS NEW, oM.MSUM AS OLD, IF(nM.MSUM IS NULL, 0, nM.MSUM)-IF(oM.MSUM IS NULL, 0, oM.MSUM) AS DIFFERENCE
+FROM (
+(SELECT modifiers.ModName, SUM(Equipment_Modifier.ModifierValue) AS MSUM, modifiers.IdMod
+FROM modifiers
+LEFT JOIN Equipment_Modifier ON (Equipment_Modifier.IdMod=modifiers.IdMod AND Equipment_Modifier.IdEquipm=2)
+GROUP BY modifiers.IdMod) AS nM,
+(SELECT modifiers.ModName, SUM(Equipment_Modifier.ModifierValue) as MSUM, modifiers.IdMod
+FROM modifiers
+LEFT JOIN Equipment_Modifier ON (Equipment_Modifier.IdMod=modifiers.IdMod AND Equipment_Modifier.IdEquipm=3)
+GROUP BY modifiers.IdMod) AS oM
+)
+WHERE nM.IdMod = oM.IdMod;
 
-SELECT buff_modifers.ModiferValue, modifers.ModName, zones.ZoneName, equipments.EquipmName FROM equipments 
-	JOIN equipment_zone ON equipment_zone.IdEquipm == equipments.IdEquipm
-		JOIN zones ON zones.IdZone == equipment_zone.IdZone
-		    JOIN character_zone ON charackter_zone.IdZone == zones.IdZone	
-				WHERE character_zone.IdCharachter == given_id;	
-
-
-
-
--- FROM modifers 
--- 	JOIN buff_modifer ON modifers.IdMod == buff_modifer.IdMod
--- 		JOIN character_buff ON character_buff.IdBuff == buff_modifer.IdBuff
--- 			JOIN characters ON character_buff.IdCharacter == characters.IdCharacter
--- 				WHERE IdCharachter == given_id;
-
-SELECT zones.ZoneName, equipments.EquipmName FROM equipments 
-	JOIN equipment_zone ON equipment_zone.IdEquipm == equipments.IdEquipm
-		JOIN zones ON zones.IdZone == equipment_zone.IdZone
-		    JOIN character_zone ON charackter_zone.IdZone == zones.IdZone	
-				WHERE character_zone.IdCharachter == given_id;	
-
-1_3
-
-SELECT zones.ZoneName, equipments.EquipmName FROM equipments 
-	JOIN equipment_zone ON equipment_zone.IdEquipm == equipments.IdEquipm
-		JOIN zones ON zones.IdZone == equipment_zone.IdZone
-		    JOIN character_zone ON charackter_zone.IdZone == zones.IdZone	
-				WHERE character_zone.IdCharachter == given_id;	
-
-1_4
-
-SELECT * FROM modifers 
-	JOIN modifer_equipment ON modifers.IdMod == modifer_equipment.IdMod
-		JOIN equipments ON modifer_equipment.IdEquipm == equipments.IdEquipm 
-			WHERE equipments.EquipmName == given_name;
-
-1_5	
-
-SELECT fields.XCoordinate, fields.YCoordinate, charchters.Name  FROM board 
-	LEFT JOIN characters fields.IdField == charchters.IdField;
-
-SELECT skills.Name, skills.description, rolls.Dice, rolls.Dice_amount FROM characters
-	WHERE character.IdCharacter == given_id
-		JOIN character_specialization ON character_specialization.ICharacter == characters.IdCharacter
-			JOIN specialization_skill ON character_specialization.IdSpec == specialization_skill.IdSpec
-				JOIN skills ON skills.IdSkill == JOIN skills ON skills.IdSkill == action_skill.IdSkill.IdSkill
-					JOIN roll_skill ON skills.IdSkill == roll_skill.IdSkill
-						JOIN rolls ON rolls.IdRoll == roll_skill.IdRoll;
-
-
-SELECT actions.Name, actions.description, rolls.Dice, rolls.Dice_amount FROM characters
-	WHERE character.IdCharacter == given_id
-		JOIN character_action ON character_action.ICharacter == characters.IdCharacter
-			JOIN action ON character_action.IdAction == actions.IdAction
-				JOIN action_skill ON character_action.IdAction == action_skill.IdAction
-					JOIN skills ON skills.IdSkill == JOIN skills ON skills.IdSkill == action_skill.IdSkill.IdSkill
-						JOIN roll_skill ON skills.IdSkill == roll_skill.IdSkill
-							JOIN rolls ON rolls.IdRoll == roll_skill.IdRoll;			
-2
-
+---------------------------------------------------------------------------
+-- CHARACTER FORM
+-- 1
 INSERT INTO characters (Name, Level, Strength, Intellect, Prudence, Charisma, IdField, IdRace, IdTeam) 
-		VALUES ("Valeria Windrunner", 76, 12, 8, 16, 17, 2, 4, 1)
-3_1
+	VALUES ("Valeria Windrunner", 76, 12, 8, 16, 17, 2, 4, 1)
 
-SELECT characters.IdCharacter, characters.Level, characters.Name FROM characters
+---------------------------------------------------------------------------
+-- CHARACTER STATS COMPARISON
+-- 1
+SELECT p.Charisma, p.Strength, p.Construction, p.Prudence, p.BaseDamage, 
+COUNT(oth.Charisma<p.Charisma)/COUNT(oth.IdCharacter)*100 AS OtherPCh, 
+COUNT(oth.Strength<p.Strength)/COUNT(oth.IdCharacter)*100 AS OtherPStr, 
+COUNT(oth.Construction<p.Construction)/COUNT(oth.IdCharacter)*100 AS OtherPCon, 
+COUNT(oth.Prudence<p.Prudence)/COUNT(oth.IdCharacter)*100 AS OtherPPrud, 
+COUNT(oth.BaseDamage<p.BaseDamage)/COUNT(oth.IdCharacter)*100 AS OtherPBD
+FROM (characters p, characters oth)
+WHERE p.IdCharacter = 1;
 
-SELECT COUNT(IdCharacter) FROM characters ;
+-- 2
+SELECT p.Charisma, p.Strength, p.Construction, p.Prudence, p.BaseDamage, 
+oth.Charisma, oth.Strength, oth.Construction, oth.Prudence, oth.BaseDamage, 
+IF(p.Charisma<oth.Charisma, "<", IF(p.Charisma=oth.Charisma, "=", ">")) AS CompCharisma,
+IF(p.Strength<oth.Strength, "<", IF(p.Strength=oth.Strength, "=", ">")) AS CompStrength,
+IF(p.Construction<oth.Construction, "<", IF(p.Construction=oth.Construction, "=", ">")) AS CompConstruction,
+IF(p.Prudence<oth.Prudence, "<", IF(p.Prudence=oth.Prudence, "=", ">")) AS CompPrudence,
+IF(p.BaseDamage<oth.BaseDamage, "<", IF(p.BaseDamage=oth.BaseDamage, "=", ">")) AS CompBaseDamage
+FROM (characters p, characters oth)
+WHERE p.IdCharacter = 1 AND oth.IdCharacter = 2;
 
-SELECT COUNT(IdCharacter) FROM characters 
-	WHERE characters.Strength >= 9
-	DIV SELECT COUNT(IdCharacter) FROM characters ;
+---------------------------------------------------------------------------
+-- GAME HISTORY
+-- 1
+SELECT RoundSummary.IdRoundSummary, rounds.IdRound, characters.IdCharacter, characters.Name, actions.ActionName, fields.XCoordinate, fields.YCoordinate, RoundSummary.DealtDamage, rolls.Dice, rolls.DiceAmount
+FROM RoundSummary
+LEFT JOIN rounds ON (rounds.IdRound=RoundSummary.IdRound)
+LEFT JOIN characters ON (characters.IdCharacter=RoundSummary.IdCharacter)
+LEFT JOIN actions ON (actions.IdAction=RoundSummary.IdAction)
+LEFT JOIN fields ON (fields.IdField=RoundSummary.IdTarget)
+INNER JOIN rolls ON (rolls.IdRoll=RoundSummary.IdRoll)
+GROUP BY RoundSummary.IdRoundSummary
+ORDER BY RoundSummary.IdRoundSummary ASC;
+---------------------------------------------------------------------------
+-- ROLL STATICS
+-- 1 TODO
+SELECT mmin.Dice, mmin.c, mmin.minda, mmin.minch, mmax.maxda, mmax.maxch
+FROM(
+(SELECT rolls.Dice, COUNT(rolls.IdRoll) as c, MIN(rolls.DiceAmount) as minda, RoundSummary.IdCharacter as minch
+FROM rolls
+LEFT JOIN RoundSummary ON (RoundSummary.IdRoll=rolls.IdRoll)
+GROUP BY rolls.Dice) as mmin,
+(SELECT rolls.Dice, MAX(rolls.DiceAmount) as maxda, RoundSummary.IdCharacter as maxch
+FROM rolls
+LEFT JOIN RoundSummary ON (RoundSummary.IdRoll=rolls.IdRoll)
+GROUP BY rolls.Dice) as mmax)
+GROUP BY mmin.Dice;
+
+-- 2
 
 
-SELECT COUNT(IdCharacter) FROM characters WHERE
-	charchters.Dexterity >= our_character_dexterity;
+-- 3
+SELECT characters.IdCharacter, characters.Name, 
+		SUM(RoundSummary.DealtDamage), 
+        SUM(RoundSummary.TakenDamage), 
+        AVG(RoundSummary.DealtDamage), 
+        AVG(RoundSummary.TakenDamage)
+FROM characters
+JOIN RoundSummary ON (RoundSummary.IdCharacter=characters.IdCharacter)
+GROUP BY characters.IdCharacter;
 
-SELECT COUNT(IdCharacter) FROM characters WHERE
-	charchters.Constitution>= our_character_constitution;
-
-SELECT COUNT(IdCharacter) FROM characters WHERE
-	charchters.Intelligence >= our_character_inteligence;
-
-SELECT COUNT(IdCharacter) FROM characters WHERE
-	charchters.Wisdom >= our_character_wisdom;
-
-SELECT COUNT(IdCharacter) FROM characters WHERE
-	charchters.Charisma >= our_character_charisma;
-
-	
-3_2
-
-SELECT * FROM characters WHERE IdCharachter == given_id;
+-- 4
+SELECT RoundSummary.IdRound, RoundSummary.CharacterHealth, RoundSummary.TakenDamage, RoundSummary.DealtDamage 
+FROM RoundSummary
+WHERE RoundSummary.IdCharacter = 2
+ORDER BY RoundSummary.IdRound ASC;
 
 
-4
 
-SELECT round_action.IdRound, actions,ActionName, rolls.Dice, rolls.DiceAmount, skills.SkillName, characters.Name, charachters.BaseAttack FROM rounds 
-	JOIN action ON round_action.IdAction == actions.IdAction
-		JOIN character_action ON character_action.IdAction == actions.IdAction
-			JOIN characters ON characters.IdCharacter == character_action.IdCharacter
-				JOIN action_skill ON action_skill.IdSkill== actions.IdAction
-					JOIN skills ON skills.IdSkill == action_skill.IdSkill
-						JOIN roll_skill ON skills.IdSkill == roll_skill.IdSkill
-							JOIN rolls ON rolls.IdRoll == roll_skill.IdRoll;
+
+--------------------------------------------------
