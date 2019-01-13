@@ -1,6 +1,5 @@
 package pbd.entity;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
