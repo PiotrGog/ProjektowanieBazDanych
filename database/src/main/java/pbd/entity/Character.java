@@ -108,6 +108,32 @@ public class Character {
         this.construction = construction;
     }
 
+
+    public int getSumStrength() {
+        return strength + class_.getStrength() + race.getStrength() + specialization.getStrength();
+    }
+
+    public int getSumAbility() {
+        return ability + class_.getAbility() + race.getAbility() + specialization.getAbility();
+    }
+
+    public int getSumIntellect() {
+        return intellect + class_.getIntellect() + race.getIntellect() + specialization.getIntellect();
+    }
+
+    public int getSumPrudence() {
+        return prudence + class_.getPrudence() + race.getPrudence() + specialization.getPrudence();
+    }
+
+    public int getSumCharisma() {
+        return charisma + class_.getCharisma() + race.getCharisma() + specialization.getCharisma();
+    }
+
+    public int getSumConstruction() {
+        return construction + class_.getConstruction() + race.getConstruction() + specialization.getConstruction();
+    }
+
+
     @Override
     public String toString() {
         return "Character{" +
