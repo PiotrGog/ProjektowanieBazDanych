@@ -107,6 +107,30 @@ public class Character {
         this.construction = construction;
     }
 
+    public Race getRace() {
+        return race;
+    }
+
+    public Class getClass_() {
+        return class_;
+    }
+
+    public Specialization getSpecialization() {
+        return specialization;
+    }
+
+    public List<Equipment> getBag() {
+        return bag;
+    }
+
+    public List<Zone> getZones() {
+        return zones;
+    }
+
+    public List<Modifier> getModifiers() {
+        return modifiers;
+    }
+
 
     public int getSumStrength() {
         return strength + class_.getStrength() + race.getStrength() + specialization.getStrength();
@@ -140,4 +164,6 @@ public class Character {
                 ", level=" + level +
                 '}';
     }
+
+
 }
