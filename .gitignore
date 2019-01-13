@@ -1,1 +1,4 @@
 data/
+database/target/
+database/.idea/
+database/db/
