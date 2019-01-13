@@ -1,18 +1,16 @@
 package pbd.entity;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
-import java.util.List;
 
 @Entity
-public class Character {
+public class Specialization {
 
     @PrimaryKey
     private String name;
 
-    private int level;
+    private String description;
 
     private int strength;
 
@@ -26,38 +24,23 @@ public class Character {
 
     private int construction;
 
-    private Race race;
-
-    private Class class_;
-
-    private Specialization specialization;
-
-    private List<Equipment> bag;
-
-    private List<Zone> zones;
-
-    private List<Modifier> modifiers;
-
-
-    public Character(String name, int level) {
+    public Specialization(String name, String description, int strength, int ability, int intellect, int prudence, int charisma, int construction) {
         this.name = name;
-        this.level = level;
+        this.description = description;
+        this.setStrength(strength);
+        this.setAbility(ability);
+        this.setIntellect(intellect);
+        this.setPrudence(prudence);
+        this.setCharisma(charisma);
+        this.setConstruction(construction);
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
+    public String getDescription() {
+        return description;
     }
 
     public int getStrength() {
@@ -106,13 +89,5 @@ public class Character {
 
     public void setConstruction(int construction) {
         this.construction = construction;
-    }
-
-    @Override
-    public String toString() {
-        return "Character{" +
-                "name='" + name + '\'' +
-                ", level=" + level +
-                '}';
     }
 }
