@@ -5,6 +5,8 @@ import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.PersistenceCapable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @PersistenceCapable
 public class Character {
@@ -179,6 +181,23 @@ public class Character {
         return modifiers;
     }
 
+    public Set<Equipment> putOnEquipment(Equipment equipment) {
+        Set<String> zones = new TreeSet<>(equipment.getZones());
+        Set<Equipment> previousEquipment = new TreeSet<>();
+        for (Zone z : this.zones) {
+            if (zones.contains(z.getName())) {
+                if (null != z.getEquipment()) {
+                    previousEquipment.add(z.getEquipment());
+                }
+                z.setEquipment(equipment);
+            }
+        }
+        return previousEquipment;
+    }
+
+
+
+
     public int getSumStrength() {
         return strength + class_.getStrength() + race.getStrength() + specialization.getStrength();
     }
@@ -202,9 +221,6 @@ public class Character {
     public int getSumConstruction() {
         return construction + class_.getConstruction() + race.getConstruction() + specialization.getConstruction();
     }
-
-    
-
 
     @Override
     public String toString() {
@@ -270,8 +286,7 @@ public class Character {
         if ("player".equalsIgnoreCase(characterType)) {
             return new Player(name, level, strength, ability, intellect, prudence, charisma, construction,
                     race, class_, specialization, bag, modifiers, quests);
-        }
-        else if("npc".equalsIgnoreCase(characterType)) {
+        } else if ("npc".equalsIgnoreCase(characterType)) {
             return new NPC(name, level, strength, ability, intellect, prudence, charisma, construction,
                     race, class_, specialization, bag, modifiers, quests);
         }

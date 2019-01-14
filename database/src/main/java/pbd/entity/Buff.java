@@ -25,25 +25,23 @@ public class Buff extends Modifier {
 
     @Override
     public String toString() {
-        return  "Buff: " +
-                "buff name=" + modName + 
-                ", buff value=" + modValue + 
-                ", buff time=" + duration + "s"
-                "\n" + Description;
+        return "Buff: " +
+                "buff name=" + super.getModName() +
+                ", buff value=" + super.getModValue() +
+                ", buff time=" + duration + " rounds";
     }
 
-    public static Class classFactory(String modName, String description, int modValue, int duration)
-    throw IllegalArgumentException
-    {
-    if (description == "") {
+    public static Buff classFactory(String modName, String description, int modValue, int duration)
+            throws IllegalArgumentException {
+        if (description.equals("")) {
             throw new IllegalArgumentException("Description value can not be an empty string.");
         }
-    if (modName == "") {
+        if (modName.equals("")) {
             throw new IllegalArgumentException("Modifer Name value can not be an empty string.");
         }
-    if (duration< 1) {
+        if (duration < 1) {
             throw new IllegalArgumentException("Duration value can not be less than 1.");
         }
-    return new Buff(modName,description, modValue, duration);        
+        return new Buff(modName, description, modValue, duration);
     }
 }
