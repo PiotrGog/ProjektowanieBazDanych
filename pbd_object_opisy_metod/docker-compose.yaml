@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  scripts:
+    build:
+      context: .
+      dockerfile: dockerfile.txt
+    image: projekt_db
+    command: sleep infinity
+    restart: always
+    container_name: scripts_service
+    volumes:
+      - ./:/my_project
+
+  mysql-dev:
+    image: mysql:8.0.2
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: project_db
+    volumes:
+      - ./data:/var/lib/mysql
+
+
+  adminer:
+    image: adminer
+    restart: always
+    

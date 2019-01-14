@@ -1,0 +1,4 @@
+1. Pobierz wszyskie podstawowe dane postaci
+2. Wyświetl zone i zalozony ekwipunek
+3. ???? pierwsza karta
+4. wyswietl porownanie pomiedzy aktualnie zalozonym elementem a nowym elementem
