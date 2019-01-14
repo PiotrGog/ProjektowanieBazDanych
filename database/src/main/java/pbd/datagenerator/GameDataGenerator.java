@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class GameDataGenerator {
@@ -19,6 +20,9 @@ public class GameDataGenerator {
     private List<Race> racesList = new ArrayList<>();
     private List<Class> classesList = new ArrayList<>();
     private List<Specialization> specializationsList = new ArrayList<>();
+
+    private List<Buff> buffsList = new ArrayList<>();
+    private List<Modifier> modifiersList = new ArrayList<>();
 
     public void fillDatabase(String databaseName) {
 
@@ -64,6 +68,23 @@ public class GameDataGenerator {
             em.persist(ra);
             em.getTransaction().commit();
         }
+
+        for (String s : Modifier.modifiers) {
+            Modifier mod = makeModifier(s);
+            modifiersList.add(mod);
+            em.getTransaction().begin();
+            em.persist(mod);
+            em.getTransaction().commit();
+        }
+
+        for (String[] s : Buff.buffs) {
+            Buff buff = makeBuff(s[0], s[1]);
+            buffsList.add(buff);
+            em.getTransaction().begin();
+            em.persist(buff);
+            em.getTransaction().commit();
+        }
+
 
         em.getTransaction().begin();
         em.persist(makePlayer("kjkfsajlfjsd"));
@@ -120,11 +141,11 @@ public class GameDataGenerator {
             i++;
         }
         return (Player) Character
-                .characterFactory(name, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
-                        Math.abs(random.nextInt()) % 20,
-                        Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
-                        Math.abs(random.nextInt()) % 20,
-                        Math.abs(random.nextInt()) % 20, race, cl,
+                .characterFactory(name, 1+Math.abs(random.nextInt()) % 20, 1+Math.abs(random.nextInt()) % 20,
+                        1+Math.abs(random.nextInt()) % 20,
+                        1+Math.abs(random.nextInt()) % 20, 1+Math.abs(random.nextInt()) % 20,
+                        1+Math.abs(random.nextInt()) % 20,
+                        1+Math.abs(random.nextInt()) % 20, race, cl,
                         sp, new ArrayList<Equipment>(), new ArrayList<Modifier>(),
                         new ArrayList<Quest>(), "player");
     }
@@ -153,12 +174,24 @@ public class GameDataGenerator {
             }
             i++;
         }
-        return (NPC) Character.characterFactory(name, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
-                Math.abs(random.nextInt()) % 20,
-                Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
-                Math.abs(random.nextInt()) % 20, race, cl,
-                sp, new ArrayList<Equipment>(), new ArrayList<Modifier>(),
-                new ArrayList<Quest>(), "npc");
+        return (NPC) Character
+                .characterFactory(name, 1 + Math.abs(random.nextInt()) % 20, 1 + Math.abs(random.nextInt()) % 20,
+                        1 + Math.abs(random.nextInt()) % 20,
+                        1 + Math.abs(random.nextInt()) % 20, 1 + Math.abs(random.nextInt()) % 20,
+                        1 + Math.abs(random.nextInt()) % 20,
+                        1 + Math.abs(random.nextInt()) % 20, race, cl,
+                        sp, new ArrayList<Equipment>(), new ArrayList<Modifier>(),
+                        new ArrayList<Quest>(), "npc");
+    }
+
+
+    public Buff makeBuff(String name, String description) {
+        return Buff
+                .buffFactory(name, description, Math.abs(random.nextInt()) % 30, 5 + Math.abs(random.nextInt()) % 10);
+    }
+
+    public Modifier makeModifier(String name) {
+        return Modifier.modifierFactory(name, name, Math.abs(random.nextInt()) % 30);
     }
 
 }

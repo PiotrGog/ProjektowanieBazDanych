@@ -60,7 +60,7 @@ public class Modifier {
     }
 
 
-    public static Modifier classFactory(String modName, String description, int modValue)
+    public static Modifier modifierFactory(String modName, String description, int modValue)
             throws IllegalArgumentException {
         if (description.equals("")) {
             throw new IllegalArgumentException("Description value can not be an empty string.");
@@ -84,6 +84,6 @@ public class Modifier {
                     "Water spells modifier", "Earth spells modifier", "Air spells modifier", "Mind spells modifier",
                     "Utility spells modifier", "Call spells modifier", "Move modifier"};
 
-    static public String[] stat = {"strength", "ability", "intellect", "prudence", "charisma", "construction"};
+//    static public String[] stat = {"strength", "ability", "intellect", "prudence", "charisma", "construction"};
 
 }
