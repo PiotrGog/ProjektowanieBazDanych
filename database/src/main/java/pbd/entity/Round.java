@@ -1,10 +1,11 @@
 package pbd.entity;
 
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 
-@Entity
+@PersistenceCapable
 public class Round {
 
     @PrimaryKey

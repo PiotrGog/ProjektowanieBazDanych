@@ -1,6 +1,8 @@
 package pbd.entity;
 
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
 import java.util.Arrays;
@@ -8,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Entity
+@PersistenceCapable
 public class Race {
 
     final static public Map<String, List<String>> availableClasses = new HashMap<>();
@@ -45,6 +47,7 @@ public class Race {
     @PrimaryKey
     private String name;
 
+    @Column(allowsNull = "false")
     private String description;
 
     private int strength;

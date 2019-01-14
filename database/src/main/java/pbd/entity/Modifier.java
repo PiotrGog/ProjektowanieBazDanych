@@ -1,14 +1,16 @@
 package pbd.entity;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
-import javax.persistence.Entity;
 
-@Entity
+@PersistenceCapable
 public class Modifier {
 
     @PrimaryKey
     private String modName;
 
+    @Column(allowsNull = "false")
     private String description;
 
     private int modValue;

@@ -1,5 +1,8 @@
 package pbd.entity;
 
+import javax.jdo.annotations.PersistenceCapable;
+
+@PersistenceCapable
 public class Buff extends Modifier {
 
     private int duration;

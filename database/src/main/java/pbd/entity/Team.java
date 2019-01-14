@@ -1,13 +1,14 @@
 package pbd.entity;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
 import java.util.List;
 
-@Entity
+@PersistenceCapable
 public class Team {
     public Team(String teamName, List<Character> characters) {
-
         this.teamName = teamName;
         this.characters = characters;
     }
@@ -39,5 +40,6 @@ public class Team {
     @PrimaryKey
     private String teamName;
 
+    @Column(allowsNull = "false")
     private List<Character> characters;
 }

@@ -1,6 +1,7 @@
 package pbd.entity;
 
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 
@@ -10,6 +11,7 @@ public class Specialization {
     @PrimaryKey
     private String name;
 
+    @Column(allowsNull = "false")
     private String description;
 
     private int strength;

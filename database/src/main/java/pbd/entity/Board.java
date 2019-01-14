@@ -1,16 +1,20 @@
 package pbd.entity;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.List;
 
-@Entity
+@PersistenceCapable
 public class Board {
-    @Id
+    @PrimaryKey
     @GeneratedValue
     private int id;
 
+    @Column(allowsNull = "false")
     private List<Field> fields;
 
     public Board(List<Field> fields) {

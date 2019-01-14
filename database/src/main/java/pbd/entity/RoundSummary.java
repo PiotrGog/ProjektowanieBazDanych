@@ -1,20 +1,24 @@
 package pbd.entity;
 
 
-import javax.persistence.Entity;
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-@Entity
+@PersistenceCapable
 public class RoundSummary {
-    @Id
+    @PrimaryKey
     @GeneratedValue
     private int id;
 
+    @Column(allowsNull = "false")
     private Round round;
 
+    @Column(allowsNull = "false")
     private Roll roll;
 
+    @Column(allowsNull = "false")
     private Player player;
 
     private int takenDamage;

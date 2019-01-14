@@ -1,22 +1,31 @@
 package pbd.entity;
 
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@PersistenceCapable
 public class Game {
-    @Id
+    @PrimaryKey
+    @GeneratedValue
     private int id;
 
+    @Column(allowsNull = "false")
     private List<Player> players;
 
+    @Column(allowsNull = "false")
     private List<Round> rounds;
 
+    @Column(allowsNull = "false")
     private List<RoundSummary> gameHistory;
 
+    @Column(allowsNull = "false")
     private List<NPC> npcs;
 
     public int getId() {

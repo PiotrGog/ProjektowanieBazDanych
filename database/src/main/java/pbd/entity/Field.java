@@ -1,15 +1,17 @@
 package pbd.entity;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
 import java.util.List;
 
-@Entity
+@PersistenceCapable
 public class Field {
     @EmbeddedId
     private FieldId id;
 
+    @Column(allowsNull = "false")
     private List<Field> neighbourField;
 
     public Field(int xCoordinate, int yCoordinate, List<Field> neighbourField) {

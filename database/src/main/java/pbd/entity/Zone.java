@@ -1,7 +1,9 @@
 package pbd.entity;
 
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 
+@PersistenceCapable
 public class Zone {
     @PrimaryKey
     private String name;

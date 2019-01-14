@@ -1,16 +1,20 @@
 package pbd.entity;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
 import java.util.List;
 
-@Entity
+@PersistenceCapable
 public class Equipment {
     @PrimaryKey
     private String equipmentName;
 
+    @Column(allowsNull = "false")
     private List<String> zones;
 
+    @Column(allowsNull = "false")
     private List<Modifier> modifiers;
 
     public String getEquipmentName() {
