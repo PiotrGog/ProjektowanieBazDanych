@@ -71,7 +71,7 @@ public class Class {
                     int charisma,
                     int construction) {
         this.name = name;
-        this.description = description;
+        this.description = description.substring(0, 100);;
         this.setStrength(strength);
         this.setAbility(ability);
         this.setIntellect(intellect);

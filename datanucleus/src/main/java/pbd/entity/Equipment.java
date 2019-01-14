@@ -13,14 +13,13 @@ public class Equipment {
     @Column(allowsNull = "false")
     private List<String> zones;
 
-    protected Equipment(String equipmentName, List<String> zones, List<Modifier> modifiers) {
+    public Equipment(String equipmentName, List<String> zones, List<Modifier> modifiers) {
         this.equipmentName = equipmentName;
         this.zones = zones;
         this.modifiers = modifiers;
     }
 
     @Column(allowsNull = "false")
-
     private List<Modifier> modifiers;
 
     public String getEquipmentName() {

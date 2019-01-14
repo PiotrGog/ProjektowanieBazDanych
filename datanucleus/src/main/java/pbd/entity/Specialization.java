@@ -12,6 +12,7 @@ public class Specialization {
     private String name;
 
     @Column(allowsNull = "false")
+    @Column(length = 500)
     private String description;
 
     private int strength;
@@ -29,7 +30,7 @@ public class Specialization {
     protected Specialization(String name, String description, int strength, int ability, int intellect, int prudence,
                              int charisma, int construction) {
         this.name = name;
-        this.description = description;
+        this.description = description.substring(0, 100);
         this.setStrength(strength);
         this.setAbility(ability);
         this.setIntellect(intellect);
@@ -117,7 +118,7 @@ public class Specialization {
 
             case "the knight":
                 return new Specialization("The Knight",
-                        "  Cavaliernote , Guardian, Sentinel. The Knight is often considered an " +
+                        "Cavaliernote , Guardian, Sentinel. The Knight is often considered an " +
                                 "upgrade to the basic Fighter. It may be able to wear bigger, heavier armor " +
                                 "(including shields) and weaponry, possibly sacrificing speed in favor of more" +
                                 " defense and power. The Knight may also gain supportive abilities that help to" +
