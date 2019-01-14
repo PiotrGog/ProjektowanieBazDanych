@@ -49,7 +49,7 @@ public class Character {
     @Column(allowsNull = "false")
     private List<Quest> quests;
 
-    protected Character(String name, int level, int strength, int ability, int intellect, int prudence, int charisma,
+    public Character(String name, int level, int strength, int ability, int intellect, int prudence, int charisma,
                         int construction, Race race, Class class_, Specialization specialization,
                         List<Equipment> bag, List<Modifier> modifiers, List<Quest> quests) {
         this.name = name;

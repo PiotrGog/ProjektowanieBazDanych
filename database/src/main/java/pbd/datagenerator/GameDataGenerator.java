@@ -86,14 +86,15 @@ public class GameDataGenerator {
         }
 
 
-        em.getTransaction().begin();
-        em.persist(makePlayer("kjkfsajlfjsd"));
-        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        em.persist(new NPC("fjdskal", 1, 2, 3, 4, 5, 6, 7, racesList.get(1), classesList.get(1),
+//                specializationsList.get(1), new ArrayList<Equipment>(), new ArrayList<Modifier>(), new ArrayList<Quest>()));
+//        em.getTransaction().commit();
 
 //
-//        em.getTransaction().begin();
-//        em.persist(new Team("team1", Collections.singletonList(ch)));
-//        em.getTransaction().commit();
+        em.getTransaction().begin();
+        em.persist(new Team("team1", new ArrayList<Character>()));
+        em.getTransaction().commit();
 //
 //
 //        // Find the number of Point objects in the database:
@@ -141,11 +142,11 @@ public class GameDataGenerator {
             i++;
         }
         return (Player) Character
-                .characterFactory(name, 1+Math.abs(random.nextInt()) % 20, 1+Math.abs(random.nextInt()) % 20,
-                        1+Math.abs(random.nextInt()) % 20,
-                        1+Math.abs(random.nextInt()) % 20, 1+Math.abs(random.nextInt()) % 20,
-                        1+Math.abs(random.nextInt()) % 20,
-                        1+Math.abs(random.nextInt()) % 20, race, cl,
+                .characterFactory(name, 1 + Math.abs(random.nextInt()) % 20, 1 + Math.abs(random.nextInt()) % 20,
+                        1 + Math.abs(random.nextInt()) % 20,
+                        1 + Math.abs(random.nextInt()) % 20, 1 + Math.abs(random.nextInt()) % 20,
+                        1 + Math.abs(random.nextInt()) % 20,
+                        1 + Math.abs(random.nextInt()) % 20, race, cl,
                         sp, new ArrayList<Equipment>(), new ArrayList<Modifier>(),
                         new ArrayList<Quest>(), "player");
     }
