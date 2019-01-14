@@ -148,6 +148,11 @@ public class Race {
         this.construction = construction;
     }
 
+    /**
+     * Finds race by name and creates new Race Object with this name and proper description.
+     * @param raceName name of race to create
+     * @return race object with given name and proper description
+     */
     public static Race raceFactory(String raceName) {
         switch (raceName.toLowerCase()) {
             case "abiku":

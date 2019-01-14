@@ -32,7 +32,7 @@ public class Skill {
             "Archaeologists must travel around the world, looking for fragments of ancient artifacts, many of which have interesting tidbits of lore attached. In Mists of Pandaria, a new faction has been added that loves archaeology."},
             {"Cooking",
                     "Cooking is a secondary profession which allows players to combine various ingredients such as fish or meat into delicious food and drink items which can be consumed to restore health and mana, as well as to grant combat buffs."},
-            {"Draenor Cooking", ""}, {"Fishing",
+            {"Draenor Cooking", "kfdjslkajfkasjklfjsjfjsdkjfksjadfiamia;disfjisdkfjkasjfjajfiosajfaslj"}, {"Fishing",
             "Fishing is a gathering secondary profession which allows players to fish in the various bodies of water found across the world. Different areas require certain skill levels before the player will be able to cast in the waters."},
             {"Riding",
                     "Riding is the passive skill which allows players to utilize a mount to navigate throughout the world. Riding skill is not leveled but rather trained at increasing gold costs."},

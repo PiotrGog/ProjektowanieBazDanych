@@ -113,6 +113,11 @@ public class Specialization {
         this.construction = construction;
     }
 
+    /**
+     * Finds specialization by name and creates new Specialization Object with this name and proper description.
+     * @param specializationName name of specialization to create
+     * @return specialization object with given name and proper description
+     */
     public static Specialization specializationFactory(String specializationName) {
         switch (specializationName.toLowerCase()) {
 

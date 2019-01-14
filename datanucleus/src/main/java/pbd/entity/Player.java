@@ -12,7 +12,26 @@ public class Player extends Character {
                 bag, modifiers, quests);
     }
 
-
+    /**
+     * Creates new Player object with given parameters
+     * @param name name for new player
+     * @param level level of new player
+     * @param strength strength level of new player
+     * @param ability ability level of new player
+     * @param intellect intellect level of new player
+     * @param prudence prudence level of new player
+     * @param charisma charisma level of new player
+     * @param construction construction level of new player
+     * @param race ability of new player
+     * @param class_ class of new player
+     * @param specialization specialization of new player
+     * @param bag bag of new player
+     * @param zones zones that new player has got
+     * @param modifiers modifiers that new player has got
+     * @param quests quests that new player has got
+     * @return new Player object with given parameters
+     * @throws IllegalArgumentException thrown if some argument is wrong
+     */
     public static Player playerFactory(String name, int level, int strength, int ability, int intellect,
                                        int prudence, int charisma,
                                        int construction, Race race, Class class_, Specialization specialization,

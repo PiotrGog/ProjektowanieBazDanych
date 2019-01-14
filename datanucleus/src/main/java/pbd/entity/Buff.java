@@ -31,6 +31,14 @@ public class Buff extends Modifier {
                 ", buff time=" + duration + " rounds";
     }
 
+    /**
+     * Creates Buff object inheriting from Class class
+     * @param modName name of modifier
+     * @param description Buff description
+     * @param modValue value of given modifier
+     * @param duration duration of working buff
+     * @return
+     */
     public static Buff buffFactory(String modName, String description, int modValue, int duration)
             throws IllegalArgumentException {
         if (description.equals("")) {

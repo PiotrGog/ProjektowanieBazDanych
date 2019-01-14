@@ -27,11 +27,6 @@ public class Field {
         return neighbourField;
     }
 
-    public Field(List<Field> neighbourField) {
-
-        this.neighbourField = neighbourField;
-    }
-
     public int getXCoordinate() {
         return xCoordinate;
     }

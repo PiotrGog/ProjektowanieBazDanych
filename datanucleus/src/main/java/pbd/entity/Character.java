@@ -181,6 +181,13 @@ public class Character {
         return modifiers;
     }
 
+
+    /**
+     * Put on new equipment
+     *
+     * @param equipment new equipment to put on character
+     * @return set of previouse warn up equipment on zones
+     */
     public Set<Equipment> putOnEquipment(Equipment equipment) {
         Set<String> zones = new TreeSet<>(equipment.getZones());
         Set<Equipment> previousEquipment = new TreeSet<>();
@@ -196,31 +203,60 @@ public class Character {
     }
 
 
-
-
+    /**
+     * Sums strength parameter of character from all his features
+     *
+     * @return sum of strength parameters
+     */
     public int getSumStrength() {
         return strength + class_.getStrength() + race.getStrength() + specialization.getStrength();
     }
 
+    /**
+     * Sums ability parameter of character from all his features
+     *
+     * @return sum of ability parameters
+     */
     public int getSumAbility() {
         return ability + class_.getAbility() + race.getAbility() + specialization.getAbility();
     }
 
+    /**
+     * Sums intellect parameter of character from all his features
+     *
+     * @return sum of intellect parameters
+     */
     public int getSumIntellect() {
         return intellect + class_.getIntellect() + race.getIntellect() + specialization.getIntellect();
     }
 
+    /**
+     * Sums prudence parameter of character from all his features
+     *
+     * @return sum of prudence parameters
+     */
     public int getSumPrudence() {
         return prudence + class_.getPrudence() + race.getPrudence() + specialization.getPrudence();
     }
 
+    /**
+     * Sums charisma parameter of character from all his features
+     *
+     * @return sum of charisma parameters
+     */
     public int getSumCharisma() {
         return charisma + class_.getCharisma() + race.getCharisma() + specialization.getCharisma();
     }
 
+    /**
+     * Sums construction parameter of character from all his features
+     *
+     * @return sum of construction parameters
+     */
     public int getSumConstruction() {
         return construction + class_.getConstruction() + race.getConstruction() + specialization.getConstruction();
     }
+
 
     @Override
     public String toString() {
@@ -230,6 +266,27 @@ public class Character {
                 '}';
     }
 
+    /**
+     * Creates new Character object with given parameters
+     *
+     * @param name           name for new character
+     * @param level          level of new character
+     * @param strength       strength level of new character
+     * @param ability        ability level of new character
+     * @param intellect      intellect level of new character
+     * @param prudence       prudence level of new character
+     * @param charisma       charisma level of new character
+     * @param construction   construction level of new character
+     * @param race           ability of new character
+     * @param class_         class of new character
+     * @param specialization specialization of new character
+     * @param bag            bag of new character
+     * @param zones          zones that new character has got
+     * @param modifiers      modifiers that new character has got
+     * @param quests         quests that new characterhas got
+     * @return new Character object with given parameters
+     * @throws IllegalArgumentException thrown if some argument is wrong
+     */
     public static Character characterFactory(String name, int level, int strength, int ability, int intellect,
                                              int prudence, int charisma,
                                              int construction, String race, String class_, String specialization,
@@ -259,6 +316,26 @@ public class Character {
                 Specialization.specializationFactory(specialization), bag, modifiers, quests);
     }
 
+    /**
+     * Creates new Character object with given parameters
+     *
+     * @param name           name for new character
+     * @param level          level of new character
+     * @param strength       strength level of new character
+     * @param ability        ability level of new character
+     * @param intellect      intellect level of new character
+     * @param prudence       prudence level of new character
+     * @param charisma       charisma level of new character
+     * @param construction   construction level of new character
+     * @param race           ability of new character
+     * @param class_         class of new character
+     * @param specialization specialization of new character
+     * @param bag            bag of new character
+     * @param modifiers      modifiers that new character has got
+     * @param quests         quests that new characterhas got
+     * @return new Character object with given parameters
+     * @throws IllegalArgumentException thrown if some argument is wrong
+     */
     public static Character characterFactory(String name, int level, int strength, int ability, int intellect,
                                              int prudence, int charisma,
                                              int construction, Race race, Class class_, Specialization specialization,
@@ -293,6 +370,12 @@ public class Character {
         return null;
     }
 
+    /**
+     * Creates all characters zones for equipment
+     *
+     * @param character new character for whom zones are created
+     * @return list of zones for character
+     */
     protected List<Zone> createAllCharacterZones(Character character) {
         ArrayList<Zone> characterZones = new ArrayList<>();
         for (String z : Zone.zones) {

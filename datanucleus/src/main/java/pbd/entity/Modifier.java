@@ -59,7 +59,13 @@ public class Modifier {
                 "\n" + description;
     }
 
-
+    /**
+     *
+     * @param modName
+     * @param description
+     * @param modValue
+     * @return
+     */
     public static Modifier modifierFactory(String modName, String description, int modValue)
             throws IllegalArgumentException {
         if (description.equals("")) {

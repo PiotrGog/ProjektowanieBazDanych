@@ -1,7 +1,5 @@
 package pbd.datagenerator;
 
-import org.datanucleus.samples.jdo.tutorial.Book;
-import org.datanucleus.samples.jdo.tutorial.Product;
 import pbd.entity.*;
 import pbd.entity.Character;
 import pbd.entity.Class;
@@ -22,6 +20,17 @@ public class GameDataGenerator {
     private List<Equipment> equipmentsList = new ArrayList<>();
     private List<Skill> skillsList = new ArrayList<>();
     private List<Quest> questList = new ArrayList<>();
+    private List<Field> fieldsList = new ArrayList<>();
+    private List<Board> boardsList = new ArrayList<>();
+    private List<Treasure> treasuresList = new ArrayList<>();
+
+    private List<Game> gamesList = new ArrayList<>();
+    private List<NPC> NPCsList = new ArrayList<>();
+    private List<Player> playersList = new ArrayList<>();
+    private List<Roll> rollsList = new ArrayList<>();
+    private List<Round> roundsList = new ArrayList<>();
+    private List<RoundSummary> roundSummariesList = new ArrayList<>();
+    private List<Team> teamsList = new ArrayList<>();
 
 
     public void fillDatabase(String databaseName) {
@@ -105,6 +114,26 @@ public class GameDataGenerator {
                 questList.add(quest);
                 tx.begin();
                 pm.makePersistent(quest);
+                tx.commit();
+            }
+
+            Board board = Board.boardFactory();
+            fieldsList = board.getFields();
+            tx.begin();
+            pm.makePersistentAll(fieldsList);
+            tx.commit();
+
+            tx.begin();
+            pm.makePersistentAll(board);
+            tx.commit();
+
+            boardsList.add(board);
+
+            for (int i = 0; i < 50; i++) {
+                Treasure t = makeTreasure();
+                treasuresList.add(t);
+                tx.begin();
+                pm.makePersistent(t);
                 tx.commit();
             }
 
@@ -250,7 +279,19 @@ public class GameDataGenerator {
     }
 
     public Skill makeSkill(String name, String description) {
-        return new Skill(name, description.substring(0, 100));
+        return new Skill(name, description.substring(0, Math.min(100, description.length())));
+    }
+
+
+    public Treasure makeTreasure() {
+        ArrayList<Equipment> equipment = new ArrayList<>(equipmentsList);
+        Collections.shuffle(equipment);
+        int k = Math.abs(random.nextInt()) % 10;
+        ArrayList<Equipment> eqInTreasure = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+            eqInTreasure.add(equipment.get(i));
+        }
+        return new Treasure(eqInTreasure);
     }
 
 }

@@ -43,6 +43,11 @@ public class Game {
         return rounds.get(rounds.size()-1);
     }
 
+    /**
+     * Returns rounds history of given character.
+     * @param character object to list its history
+     * @return list of RoundSummary objects which represtent history of given character
+     */
     public List<RoundSummary> getCharacterHistory(Character character){
         List<RoundSummary> characterHistory = new ArrayList<>();
         for(RoundSummary rs : gameHistory){
