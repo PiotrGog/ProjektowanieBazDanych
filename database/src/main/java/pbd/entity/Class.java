@@ -11,40 +11,40 @@ import java.util.Map;
 @Entity
 public class Class {
 
-    final static public Map<String, List<String>> validSpecializations = new HashMap<>();
+    final static public Map<String, List<String>> availableSpecializations = new HashMap<>();
 
     static {
-        validSpecializations.put("hunter",
+        availableSpecializations.put("hunter",
                 Arrays.asList("The Barbarian", "The Monster Knight", "The Samurai", "The Warlord", "The Cavalier",
                         "The Rebel"));
-        validSpecializations.put("cleric",
+        availableSpecializations.put("cleric",
                 Arrays.asList("The Hero", "The Inherent Gift Magician", "The Theurgist", "The Summoner",
                         "The Vancian Magician"));
-        validSpecializations.put("assassin",
+        availableSpecializations.put("assassin",
                 Arrays.asList("The Battle Priest", "The Witch Doctor", "The Templar", "The Caster",
                         "The Sniper Ranger"));
-        validSpecializations.put("ninja",
+        availableSpecializations.put("ninja",
                 Arrays.asList("The Bow and Blade Ranger", "The Dual Wielding Ranger", "The Beast Master Ranger"));
-        validSpecializations.put("thief",
+        availableSpecializations.put("thief",
                 Arrays.asList("The Summoner Ranger", "The Trapper Ranger", "The Magical Ranger", "The Magic Knight"));
-        validSpecializations.put("magus",
+        availableSpecializations.put("magus",
                 Arrays.asList("The Battle Mage", "The Bard", "The Dancer", "The Cantor", "The Skald", "The Monk",
                         "The Beast"));
-        validSpecializations.put("magician",
+        availableSpecializations.put("magician",
                 Arrays.asList("The Engineer", "The Alchemist", "The Gunslinger", "The Gun Mage", "The Psychic"));
-        validSpecializations.put("warlock",
+        availableSpecializations.put("warlock",
                 Arrays.asList("The Elementalist", "The Druid", "The Shaman", "The Thief", "The Assassin",
                         "The Gambler"));
-        validSpecializations.put("wizard",
+        availableSpecializations.put("wizard",
                 Arrays.asList("The Beastmaster", "The Scholar"));
-        validSpecializations.put("mage",
+        availableSpecializations.put("mage",
                 Arrays.asList("The Illusionist", "The Nature Magician", "The Scout", "The Priest"));
-        validSpecializations.put("soldier",
+        availableSpecializations.put("soldier",
                 Arrays.asList("The Knight", "The Warden", "The Swashbuckler", "The Paladin", "The Dark Knight",
                         "The Dragon Knight"));
-        validSpecializations.put("knight",
+        availableSpecializations.put("knight",
                 Arrays.asList("The Ninja", "The Shadow", "The Bandit", "The Pirate"));
-        validSpecializations.put("warrior",
+        availableSpecializations.put("warrior",
                 Arrays.asList("The Red Mage", "The Blue Mage", "The Necromancer"));
     }
 
@@ -90,7 +90,10 @@ public class Class {
         return strength;
     }
 
-    public void setStrength(int strength) {
+    public void setStrength(int strength) throws IllegalArgumentException {
+        if (strength < 1) {
+            throw new IllegalArgumentException("Strength value can not be less than 1.");
+        }
         this.strength = strength;
     }
 
@@ -98,7 +101,10 @@ public class Class {
         return ability;
     }
 
-    public void setAbility(int ability) {
+    public void setAbility(int ability) throws IllegalArgumentException {
+        if (ability < 1) {
+            throw new IllegalArgumentException("Ability value can not be less than 1.");
+        }
         this.ability = ability;
     }
 
@@ -106,7 +112,10 @@ public class Class {
         return intellect;
     }
 
-    public void setIntellect(int intellect) {
+    public void setIntellect(int intellect) throws IllegalArgumentException {
+        if (intellect < 1) {
+            throw new IllegalArgumentException("Intellect value can not be less than 1.");
+        }
         this.intellect = intellect;
     }
 
@@ -114,7 +123,10 @@ public class Class {
         return prudence;
     }
 
-    public void setPrudence(int prudence) {
+    public void setPrudence(int prudence) throws IllegalArgumentException {
+        if (prudence < 1) {
+            throw new IllegalArgumentException("Prudence value can not be less than 1.");
+        }
         this.prudence = prudence;
     }
 
@@ -122,7 +134,10 @@ public class Class {
         return charisma;
     }
 
-    public void setCharisma(int charisma) {
+    public void setCharisma(int charisma) throws IllegalArgumentException {
+        if (charisma < 1) {
+            throw new IllegalArgumentException("Charisma value can not be less than 1.");
+        }
         this.charisma = charisma;
     }
 
@@ -130,7 +145,10 @@ public class Class {
         return construction;
     }
 
-    public void setConstruction(int construction) {
+    public void setConstruction(int construction) throws IllegalArgumentException {
+        if (construction < 1) {
+            throw new IllegalArgumentException("Construction value can not be less than 1.");
+        }
         this.construction = construction;
     }
 
@@ -300,7 +318,7 @@ public class Class {
         }
     }
 
-//    String[] classes =
-//            {"hunter", "cleric", "assassin", "ninja", "thief", "magus", "magician", "warlock", "wizard", "mage",
-//                    "soldier", "knight", "warrior"};
+    static public String[] classes =
+            {"hunter", "cleric", "assassin", "ninja", "thief", "magus", "magician", "warlock", "wizard", "mage",
+                    "soldier", "knight", "warrior"};
 }

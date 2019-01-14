@@ -11,33 +11,33 @@ import java.util.Map;
 @Entity
 public class Race {
 
-    final static public Map<String, List<String>> validClasses = new HashMap<>();
+    final static public Map<String, List<String>> availableClasses = new HashMap<>();
 
     static {
-        validClasses.put("abiku",
+        availableClasses.put("abiku",
                 Arrays.asList("hunter", "cleric", "assassin", "ninja"));
-        validClasses.put("angels",
+        availableClasses.put("angels",
                 Arrays.asList("hunter", "cleric", "assassin", "warlock",
                         "wizard", "mage", "soldier", "knight", "warrior"));
-        validClasses.put("bakru",
+        availableClasses.put("bakru",
                 Arrays.asList("thief", "magus", "magician", "warlock",
                         "wizard", "mage", "soldier", "knight", "warrior"));
-        validClasses.put("banshee",
+        availableClasses.put("banshee",
                 Arrays.asList("hunter", "cleric", "assassin", "ninja", "thief", "magus"));
-        validClasses.put("barghests",
+        availableClasses.put("barghests",
                 Arrays.asList("hunter", "cleric", "warlock", "wizard", "mage", "soldier", "knight", "warrior"));
-        validClasses.put("basilisks",
+        availableClasses.put("basilisks",
                 Arrays.asList("hunter", "magician", "warlock", "wizard", "mage", "soldier", "knight", "warrior"));
-        validClasses.put("brownies",
+        availableClasses.put("brownies",
                 Arrays.asList("hunter", "cleric", "assassin", "ninja", "thief", "magus", "magician", "warlock"));
-        validClasses.put("btsan",
+        availableClasses.put("btsan",
                 Arrays.asList("hunter", "warlock", "wizard", "mage", "soldier", "knight", "warrior"));
-        validClasses.put("Cerberus",
+        availableClasses.put("cerberus",
                 Arrays.asList("hunter", "cleric", "assassin", "ninja", "thief", "magus", "magician", "warlock",
                         "wizard", "mage"));
-        validClasses.put("chimera",
+        availableClasses.put("chimera",
                 Arrays.asList("hunter", "wizard", "mage", "soldier", "knight", "warrior"));
-        validClasses.put("changeling",
+        availableClasses.put("changeling",
                 Arrays.asList("hunter", "cleric", "magician", "warlock",
                         "wizard", "mage", "warrior"));
     }
@@ -61,7 +61,7 @@ public class Race {
 
     protected Race(String name, String description, int strength, int ability, int intellect, int prudence,
                    int charisma,
-                   int construction) {
+                   int construction) throws IllegalArgumentException{
         this.name = name;
         this.description = description;
         this.setStrength(strength);
@@ -84,7 +84,10 @@ public class Race {
         return strength;
     }
 
-    public void setStrength(int strength) {
+    public void setStrength(int strength) throws IllegalArgumentException {
+        if (strength < 1) {
+            throw new IllegalArgumentException("Strength value can not be less than 1.");
+        }
         this.strength = strength;
     }
 
@@ -92,7 +95,10 @@ public class Race {
         return ability;
     }
 
-    public void setAbility(int ability) {
+    public void setAbility(int ability) throws IllegalArgumentException {
+        if (ability < 1) {
+            throw new IllegalArgumentException("Ability value can not be less than 1.");
+        }
         this.ability = ability;
     }
 
@@ -100,7 +106,10 @@ public class Race {
         return intellect;
     }
 
-    public void setIntellect(int intellect) {
+    public void setIntellect(int intellect) throws IllegalArgumentException {
+        if (intellect < 1) {
+            throw new IllegalArgumentException("Intellect value can not be less than 1.");
+        }
         this.intellect = intellect;
     }
 
@@ -108,7 +117,10 @@ public class Race {
         return prudence;
     }
 
-    public void setPrudence(int prudence) {
+    public void setPrudence(int prudence) throws IllegalArgumentException {
+        if (prudence < 1) {
+            throw new IllegalArgumentException("Prudence value can not be less than 1.");
+        }
         this.prudence = prudence;
     }
 
@@ -116,7 +128,10 @@ public class Race {
         return charisma;
     }
 
-    public void setCharisma(int charisma) {
+    public void setCharisma(int charisma) throws IllegalArgumentException {
+        if (charisma < 1) {
+            throw new IllegalArgumentException("Charisma value can not be less than 1.");
+        }
         this.charisma = charisma;
     }
 
@@ -124,7 +139,10 @@ public class Race {
         return construction;
     }
 
-    public void setConstruction(int construction) {
+    public void setConstruction(int construction) throws IllegalArgumentException {
+        if (construction < 1) {
+            throw new IllegalArgumentException("Construction value can not be less than 1.");
+        }
         this.construction = construction;
     }
 
@@ -132,6 +150,13 @@ public class Race {
         switch (raceName.toLowerCase()) {
             case "abiku":
                 return new Race("Abiku",
+                        "among the Yoruba and Dahomey people in West Africa, " +
+                                "these are evil tree spirits that are born as children and " +
+                                "die several times, often within the same family. " +
+                                "I could be wrong, but I think the ogbanje are basically the same thing",
+                        10, 4, 5, 12, 1, 4);
+            case "angels":
+                return new Race("Angels",
                         "among the Yoruba and Dahomey people in West Africa, " +
                                 "these are evil tree spirits that are born as children and " +
                                 "die several times, often within the same family. " +
@@ -170,7 +195,7 @@ public class Race {
                 return new Race("btsan",
                         "the btsan are fierce sky spirits in Tibet that look like red hunters riding " +
                                 "red horses.", 5, 12, 10, 2, 4, 2);
-            case "Cerberus":
+            case "cerberus":
                 return new Race("Cerberus",
                         "a three-headed dog that guards the door of the Underworld in Greek mythology.",
                         12, 12, 4, 6, 12, 12);
@@ -180,12 +205,12 @@ public class Race {
                                 " a goats head sticking out of its back, a set of goat-udders just for " +
                                 "fun, and a serpentine tail.",
                         1, 4, 6, 15, 3, 13);
-//            case "changeling":
-//                return new Race("changeling",
-//                        "many European countries have stories about the fairies or trolls stealing " +
-//                                "human babies and leaving sickly or malignant magical babies in their place." +
-//                                " These myths have some similarities with the abiku, above.",
-//                        3, 2, 10, 15, 9, 5);
+            case "changeling":
+                return new Race("changeling",
+                        "many European countries have stories about the fairies or trolls stealing " +
+                                "human babies and leaving sickly or malignant magical babies in their place." +
+                                " These myths have some similarities with the abiku, above.",
+                        3, 2, 10, 15, 9, 5);
 //            case "Cloud People":
 //                return new Race("Cloud People",
 //                        "also known as the Shiwanna. In Pueblo Native American traditions, these " +
@@ -589,23 +614,24 @@ public class Race {
 //                        "there are many of them, from a few different cultures, besides the famous Pegasus.",
 //                        2, 14, 2, 4, 10, 2);
             default:
+                System.out.println(raceName);
                 return null;
         }
     }
 
 
-//    String[] listRaces =
-//            {"abiku", "angels", "bakru", "banshee", "barghests", "basilisks", "brownies", "btsan", "Cerberus",
-//                    "chimera", "changeling", "Cloud People", "Co-hon", "Coraniaid", "Cwn Annwn", "dÃ¦mons", "demons",
-//                    "dodore", "djinn", "dracae", "dragons", "dryads", "dwarves", "duende", "elves", "emandwa",
-//                    "encantados", "fairies", "fauns", "firebird", "flagae", "fuaths", "gahe", "ganas", "gandharvas",
-//                    "gnomes", "goblins", "gremlins", "gryphons", "hag", "harpies", "Hesperides", "hobgoblin", "hongaek",
-//                    "hu hsien", "hydra", "hyter sprites", "igigi", "incubi", "javerzaharses", "kaches", "kakamora",
-//                    "kanaima", "kitsune", "kupua", "keshalyi", "kobolds", "Korrigan", "knockers", "leprechauns",
-//                    "limoneads", "ma-mo", "matabiri", "matagaigai", "mermaids and mermen", "minotaur", "moksin tongbop",
-//                    "muses", "nats", "nixies", "norns", "phoenix", "pixies", "poltergeists", "saba-leippya",
-//                    "salamanders", "selkies", "skinwalkers", "Sphinx", "succubi", "sylphs", "trolls", "undines",
-//                    "unicorns", "Valkyries", "vampires", "veela", "wendigos", "werewolves", "winged horses"};
+    static public String[] races =
+            {"abiku", "angels", "bakru", "banshee", "barghests", "basilisks", "brownies", "btsan", "Cerberus",
+                    "chimera", "changeling"/*, "Cloud People", "Co-hon", "Coraniaid", "Cwn Annwn", "dÃ¦mons", "demons",
+                    "dodore", "djinn", "dracae", "dragons", "dryads", "dwarves", "duende", "elves", "emandwa",
+                    "encantados", "fairies", "fauns", "firebird", "flagae", "fuaths", "gahe", "ganas", "gandharvas",
+                    "gnomes", "goblins", "gremlins", "gryphons", "hag", "harpies", "Hesperides", "hobgoblin", "hongaek",
+                    "hu hsien", "hydra", "hyter sprites", "igigi", "incubi", "javerzaharses", "kaches", "kakamora",
+                    "kanaima", "kitsune", "kupua", "keshalyi", "kobolds", "Korrigan", "knockers", "leprechauns",
+                    "limoneads", "ma-mo", "matabiri", "matagaigai", "mermaids and mermen", "minotaur", "moksin tongbop",
+                    "muses", "nats", "nixies", "norns", "phoenix", "pixies", "poltergeists", "saba-leippya",
+                    "salamanders", "selkies", "skinwalkers", "Sphinx", "succubi", "sylphs", "trolls", "undines",
+                    "unicorns", "Valkyries", "vampires", "veela", "wendigos", "werewolves", "winged horses"*/};
 
 
 }

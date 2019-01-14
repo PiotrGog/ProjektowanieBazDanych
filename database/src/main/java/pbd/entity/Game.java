@@ -17,6 +17,8 @@ public class Game {
 
     private List<RoundSummary> gameHistory;
 
+    private List<NPC> npcs;
+
     public int getId() {
         return id;
     }

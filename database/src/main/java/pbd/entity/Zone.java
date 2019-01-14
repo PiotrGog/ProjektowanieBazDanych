@@ -23,6 +23,5 @@ public class Zone {
 
     public Equipment getEquipment() {
         return equipment;
-
     }
 }

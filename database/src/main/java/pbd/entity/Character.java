@@ -1,11 +1,12 @@
 package pbd.entity;
 
-
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PrimaryKey;
-import javax.persistence.Entity;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Value;
 import java.util.List;
 
-@Entity
+@PersistenceCapable
 public class Character {
 
     @PrimaryKey
@@ -25,29 +26,55 @@ public class Character {
 
     private int construction;
 
+    @Column(allowsNull = "false")
     private Race race;
 
+    @Column(allowsNull = "false")
     private Class class_;
 
+    @Column(allowsNull = "false")
     private Specialization specialization;
 
+    @Column(allowsNull = "false")
     private List<Equipment> bag;
 
+    @Column(allowsNull = "false")
     private List<Zone> zones;
 
+    @Column(allowsNull = "false")
     private List<Modifier> modifiers;
 
+    @Column(allowsNull = "false")
+    private List<Quest> quests;
 
-    public Character(String name, int level) {
+    protected Character(String name, int level, int strength, int ability, int intellect, int prudence, int charisma,
+                        int construction, Race race, Class class_, Specialization specialization,
+                        List<Equipment> bag, List<Zone> zones, List<Modifier> modifiers, List<Quest> quests) {
         this.name = name;
-        this.level = level;
+        this.setLevel(level);
+        this.setStrength(strength);
+        this.setAbility(ability);
+        this.setIntellect(intellect);
+        this.setPrudence(prudence);
+        this.setCharisma(charisma);
+        this.setConstruction(construction);
+        this.race = race;
+        this.class_ = class_;
+        this.specialization = specialization;
+        this.bag = bag;
+        this.zones = zones;
+        this.modifiers = modifiers;
+        this.quests = quests;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws IllegalArgumentException, NullPointerException {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Name can not be empty.");
+        }
         this.name = name;
     }
 
@@ -55,7 +82,10 @@ public class Character {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(int level) throws IllegalArgumentException {
+        if (level < 1) {
+            throw new IllegalArgumentException("Level value can not be less than 1.");
+        }
         this.level = level;
     }
 
@@ -63,7 +93,10 @@ public class Character {
         return strength;
     }
 
-    public void setStrength(int strength) {
+    public void setStrength(int strength) throws IllegalArgumentException {
+        if (strength < 1) {
+            throw new IllegalArgumentException("Strength value can not be less than 1.");
+        }
         this.strength = strength;
     }
 
@@ -71,7 +104,10 @@ public class Character {
         return ability;
     }
 
-    public void setAbility(int ability) {
+    public void setAbility(int ability) throws IllegalArgumentException {
+        if (ability < 1) {
+            throw new IllegalArgumentException("Ability value can not be less than 1.");
+        }
         this.ability = ability;
     }
 
@@ -79,7 +115,10 @@ public class Character {
         return intellect;
     }
 
-    public void setIntellect(int intellect) {
+    public void setIntellect(int intellect) throws IllegalArgumentException {
+        if (intellect < 1) {
+            throw new IllegalArgumentException("Intellect value can not be less than 1.");
+        }
         this.intellect = intellect;
     }
 
@@ -87,7 +126,10 @@ public class Character {
         return prudence;
     }
 
-    public void setPrudence(int prudence) {
+    public void setPrudence(int prudence) throws IllegalArgumentException {
+        if (prudence < 1) {
+            throw new IllegalArgumentException("Prudence value can not be less than 1.");
+        }
         this.prudence = prudence;
     }
 
@@ -95,7 +137,10 @@ public class Character {
         return charisma;
     }
 
-    public void setCharisma(int charisma) {
+    public void setCharisma(int charisma) throws IllegalArgumentException {
+        if (charisma < 1) {
+            throw new IllegalArgumentException("Charisma value can not be less than 1.");
+        }
         this.charisma = charisma;
     }
 
@@ -103,7 +148,10 @@ public class Character {
         return construction;
     }
 
-    public void setConstruction(int construction) {
+    public void setConstruction(int construction) throws IllegalArgumentException {
+        if (construction < 1) {
+            throw new IllegalArgumentException("Construction value can not be less than 1.");
+        }
         this.construction = construction;
     }
 
@@ -130,7 +178,6 @@ public class Character {
     public List<Modifier> getModifiers() {
         return modifiers;
     }
-
 
     public int getSumStrength() {
         return strength + class_.getStrength() + race.getStrength() + specialization.getStrength();
@@ -163,6 +210,63 @@ public class Character {
                 "name='" + name + '\'' +
                 ", level=" + level +
                 '}';
+    }
+
+    public static Character characterFactory(String name, int level, int strength, int ability, int intellect,
+                                             int prudence, int charisma,
+                                             int construction, String race, String class_, String specialization,
+                                             List<Equipment> bag, List<Zone> zones, List<Modifier> modifiers,
+                                             List<Quest> quests)
+            throws IllegalArgumentException {
+
+        List<String> availableClasses = Race.availableClasses.get(race);
+        List<String> availableSpecializations = Class.availableSpecializations.get(class_);
+        if (null == availableClasses) {
+            throw new IllegalArgumentException("Race " + race + " is not defined.");
+        }
+        if (null == availableSpecializations) {
+            throw new IllegalArgumentException("Class " + class_ + " is not defined.");
+        }
+        if (!availableClasses.contains(class_)) {
+            throw new IllegalArgumentException(
+                    "Combination race" + race + " and class " + class_ + " is not available.");
+        }
+        if (!availableSpecializations.contains(specialization)) {
+            throw new IllegalArgumentException(
+                    "Combination class" + class_ + " and specialization " + specialization + " is not available.");
+        }
+
+        return new Character(name, level, strength, ability, intellect, prudence, charisma, construction,
+                Race.raceFactory(race), Class.classFactory(class_),
+                Specialization.specializationFactory(specialization), bag, zones, modifiers, quests);
+    }
+
+    public static Character characterFactory(String name, int level, int strength, int ability, int intellect,
+                                             int prudence, int charisma,
+                                             int construction, Race race, Class class_, Specialization specialization,
+                                             List<Equipment> bag, List<Zone> zones, List<Modifier> modifiers,
+                                             List<Quest> quests)
+            throws IllegalArgumentException {
+
+        List<String> availableClasses = Race.availableClasses.get(race);
+        List<String> availableSpecializations = Class.availableSpecializations.get(class_);
+        if (null == availableClasses) {
+            throw new IllegalArgumentException("Race " + race + " is not defined.");
+        }
+        if (null == availableSpecializations) {
+            throw new IllegalArgumentException("Class " + class_ + " is not defined.");
+        }
+        if (!availableClasses.contains(class_)) {
+            throw new IllegalArgumentException(
+                    "Combination race" + race + " and class " + class_ + " is not available.");
+        }
+        if (!availableSpecializations.contains(specialization)) {
+            throw new IllegalArgumentException(
+                    "Combination class" + class_ + " and specialization " + specialization + " is not available.");
+        }
+
+        return new Character(name, level, strength, ability, intellect, prudence, charisma, construction,
+                race, class_, specialization, bag, zones, modifiers, quests);
     }
 
 
