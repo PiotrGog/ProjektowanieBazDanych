@@ -2,3 +2,5 @@ data/
 database/target/
 database/.idea/
 database/db/
+datanucleus/target/
+datanucleus/.idea/
