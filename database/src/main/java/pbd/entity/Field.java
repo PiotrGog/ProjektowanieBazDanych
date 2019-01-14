@@ -44,7 +44,7 @@ class FieldId{
     int xCoordinate;
     int yCoordinate;
 
-    public FieldId(int xCoordinate, int yCoordinate) {
+    FieldId(int xCoordinate, int yCoordinate) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
     }

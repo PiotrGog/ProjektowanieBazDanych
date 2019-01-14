@@ -3,7 +3,7 @@ package pbd.entity;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Value;
+import java.util.ArrayList;
 import java.util.List;
 
 @PersistenceCapable
@@ -49,7 +49,7 @@ public class Character {
 
     protected Character(String name, int level, int strength, int ability, int intellect, int prudence, int charisma,
                         int construction, Race race, Class class_, Specialization specialization,
-                        List<Equipment> bag, List<Zone> zones, List<Modifier> modifiers, List<Quest> quests) {
+                        List<Equipment> bag, List<Modifier> modifiers, List<Quest> quests) {
         this.name = name;
         this.setLevel(level);
         this.setStrength(strength);
@@ -62,7 +62,7 @@ public class Character {
         this.class_ = class_;
         this.specialization = specialization;
         this.bag = bag;
-        this.zones = zones;
+        this.zones = createAllCharacterZones(this);
         this.modifiers = modifiers;
         this.quests = quests;
     }
@@ -203,6 +203,8 @@ public class Character {
         return construction + class_.getConstruction() + race.getConstruction() + specialization.getConstruction();
     }
 
+    
+
 
     @Override
     public String toString() {
@@ -238,36 +240,49 @@ public class Character {
 
         return new Character(name, level, strength, ability, intellect, prudence, charisma, construction,
                 Race.raceFactory(race), Class.classFactory(class_),
-                Specialization.specializationFactory(specialization), bag, zones, modifiers, quests);
+                Specialization.specializationFactory(specialization), bag, modifiers, quests);
     }
 
     public static Character characterFactory(String name, int level, int strength, int ability, int intellect,
                                              int prudence, int charisma,
                                              int construction, Race race, Class class_, Specialization specialization,
-                                             List<Equipment> bag, List<Zone> zones, List<Modifier> modifiers,
-                                             List<Quest> quests)
+                                             List<Equipment> bag, List<Modifier> modifiers,
+                                             List<Quest> quests, String characterType)
             throws IllegalArgumentException {
 
-        List<String> availableClasses = Race.availableClasses.get(race);
-        List<String> availableSpecializations = Class.availableSpecializations.get(class_);
-        if (null == availableClasses) {
-            throw new IllegalArgumentException("Race " + race + " is not defined.");
-        }
-        if (null == availableSpecializations) {
-            throw new IllegalArgumentException("Class " + class_ + " is not defined.");
-        }
-        if (!availableClasses.contains(class_)) {
-            throw new IllegalArgumentException(
-                    "Combination race" + race + " and class " + class_ + " is not available.");
-        }
-        if (!availableSpecializations.contains(specialization)) {
-            throw new IllegalArgumentException(
-                    "Combination class" + class_ + " and specialization " + specialization + " is not available.");
-        }
+//        List<String> availableClasses = Race.availableClasses.get(race);
+//        List<String> availableSpecializations = Class.availableSpecializations.get(class_);
+//        if (null == availableClasses) {
+//            throw new IllegalArgumentException("Race " + race + " is not defined.");
+//        }
+//        if (null == availableSpecializations) {
+//            throw new IllegalArgumentException("Class " + class_ + " is not defined.");
+//        }
+//        if (!availableClasses.contains(class_)) {
+//            throw new IllegalArgumentException(
+//                    "Combination race" + race + " and class " + class_ + " is not available.");
+//        }
+//        if (!availableSpecializations.contains(specialization)) {
+//            throw new IllegalArgumentException(
+//                    "Combination class" + class_ + " and specialization " + specialization + " is not available.");
+//        }
 
-        return new Character(name, level, strength, ability, intellect, prudence, charisma, construction,
-                race, class_, specialization, bag, zones, modifiers, quests);
+        if ("player".equalsIgnoreCase(characterType)) {
+            return new Player(name, level, strength, ability, intellect, prudence, charisma, construction,
+                    race, class_, specialization, bag, modifiers, quests);
+        }
+        else if("npc".equalsIgnoreCase(characterType)) {
+            return new NPC(name, level, strength, ability, intellect, prudence, charisma, construction,
+                    race, class_, specialization, bag, modifiers, quests);
+        }
+        return null;
     }
 
-
+    protected List<Zone> createAllCharacterZones(Character character) {
+        ArrayList<Zone> characterZones = new ArrayList<>();
+        for (String z : Zone.zones) {
+            characterZones.add(new Zone(z, character, null));
+        }
+        return characterZones;
+    }
 }

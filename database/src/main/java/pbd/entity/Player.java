@@ -5,11 +5,11 @@ import java.util.List;
 
 @PersistenceCapable
 public class Player extends Character {
-    public Player(String name, int level, int strength, int ability, int intellect, int prudence, int charisma,
+    protected Player(String name, int level, int strength, int ability, int intellect, int prudence, int charisma,
                   int construction, Race race, Class class_, Specialization specialization,
-                  List<Equipment> bag, List<Zone> zones, List<Modifier> modifiers, List<Quest> quests) {
+                  List<Equipment> bag, List<Modifier> modifiers, List<Quest> quests) {
         super(name, level, strength, ability, intellect, prudence, charisma, construction, race, class_, specialization,
-                bag, zones, modifiers, quests);
+                bag, modifiers, quests);
     }
 
 
@@ -38,6 +38,6 @@ public class Player extends Character {
 //        }
 
         return new Player(name, level, strength, ability, intellect, prudence, charisma, construction,
-                race, class_, specialization, bag, zones, modifiers, quests);
+                race, class_, specialization, bag, modifiers, quests);
     }
 }

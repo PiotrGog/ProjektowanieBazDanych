@@ -98,7 +98,39 @@ public class GameDataGenerator {
 
 
     public Player makePlayer(String name) {
+        Race race = racesList.get(Math.abs(random.nextInt()) % racesList.size());
+        String cString = Race.availableClasses.get(race.getName().toLowerCase())
+                .get(Math.abs(random.nextInt()) % Race.availableClasses.get(race.getName().toLowerCase()).size());
+        Class cl = null;
+        int i = 0;
+        while (cl == null) {
+            if (classesList.get(i).getName().equalsIgnoreCase(cString)) {
+                cl = classesList.get(i);
+            }
+            i++;
+        }
+        String sString = Class.availableSpecializations.get(cString)
+                .get(Math.abs(random.nextInt()) % Class.availableSpecializations.get(cString).size());
+        Specialization sp = null;
+        i = 0;
+        while (sp == null) {
+            if (specializationsList.get(i).getName().equalsIgnoreCase(sString)) {
+                sp = specializationsList.get(i);
+            }
+            i++;
+        }
+        return (Player) Character
+                .characterFactory(name, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
+                        Math.abs(random.nextInt()) % 20,
+                        Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
+                        Math.abs(random.nextInt()) % 20,
+                        Math.abs(random.nextInt()) % 20, race, cl,
+                        sp, new ArrayList<Equipment>(), new ArrayList<Modifier>(),
+                        new ArrayList<Quest>(), "player");
+    }
 
+
+    public NPC makeNPC(String name) {
         Race race = racesList.get(Math.abs(random.nextInt()) % racesList.size());
 
         String cString = Race.availableClasses.get(race.getName().toLowerCase())
@@ -111,7 +143,6 @@ public class GameDataGenerator {
             }
             i++;
         }
-
         String sString = Class.availableSpecializations.get(cString)
                 .get(Math.abs(random.nextInt()) % Class.availableSpecializations.get(cString).size());
         Specialization sp = null;
@@ -122,14 +153,12 @@ public class GameDataGenerator {
             }
             i++;
         }
-
-        return Player.playerFactory(name, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
-                Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20, race, cl,
-                sp, new ArrayList<Equipment>(), new ArrayList<Zone>(), new ArrayList<Modifier>(),
-                new ArrayList<Quest>());
-
+        return (NPC) Character.characterFactory(name, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
+                Math.abs(random.nextInt()) % 20,
+                Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20, Math.abs(random.nextInt()) % 20,
+                Math.abs(random.nextInt()) % 20, race, cl,
+                sp, new ArrayList<Equipment>(), new ArrayList<Modifier>(),
+                new ArrayList<Quest>(), "npc");
     }
-
-
 
 }
